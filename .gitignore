@@ -1,0 +1,15 @@
+*.aux
+*.log
+*.nav
+*.out
+*.pdf
+*.snm
+*.swp
+*.tar.gz
+*.toc
+*~
+/Architecture.svg
+/ls-R
+Architecture.eps
+Thumbs.db*
+\~\$*

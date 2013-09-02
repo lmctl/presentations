@@ -1,0 +1,73 @@
+% Copytight 2013 by Samsung Electronics
+%
+% Authors:
+% Łukasz Stelmach
+
+\mode<presentation>
+
+\defbeamertemplate{background canvas}{title page}%
+{{%
+\includegraphics[height=1\paperheight,width=1.778\paperheight]{frontpage_bg.jpg}%
+}}%
+
+\defbeamertemplate{background canvas}{part page}
+{{%
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \includegraphics[height=\paperheight,width=1.7778\paperheight]{section_bg.jpg}
+}}
+
+\defbeamertemplate{background canvas}{section page}
+{{%
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \includegraphics[height=\paperheight,width=1.778\paperheight]{section_bg.jpg}
+}}
+
+\defbeamertemplate{background canvas}{subsection page}
+{{%
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \includegraphics[height=\paperheight,width=1.7778\paperheight]{section_bg.jpg}
+}}
+
+\setbeamertemplate{title page}
+{%
+\begin{centering}%
+\begin{beamercolorbox}[right]{title}%
+\usebeamerfont{title}\vskip1.2ex\inserttitle%
+\end{beamercolorbox}%
+\vskip10ex%
+\begin{beamercolorbox}[right,sep=1pt]{author}%
+\rule[-.5ex]{0pt}{2.1ex}
+\usebeamerfont{author}\insertauthor
+\rule[-.5ex]{0pt}{2.1ex}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[right,sep=1pt]{institute}%
+\rule[-.5ex]{0pt}{2.1ex}
+\usebeamerfont{institute}\insertinstitute%
+\rule[-.5ex]{0pt}{2.1ex}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[right,sep=1pt]{date}%
+\rule[-.5ex]{0pt}{2.1ex}
+\usebeamerfont{date}\insertdate%
+\rule[-.5ex]{0pt}{2.1ex}
+\end{beamercolorbox}%
+\end{centering}%
+}
+
+\setbeamertemplate{section page}%
+{%
+\vskip.77\paperheight plus 1filll%
+\begin{beamercolorbox}[left]{part title}%
+\usebeamerfont{section title}\insertsection%
+\end{beamercolorbox}%
+\vskip.2\paperheight plus 1filll%
+}%
+
+\renewcommand\maketitle%
+{%
+\setbeamertemplate{footline}[title page]%
+\setbeamertemplate{background canvas}[title page]%
+\ifbeamer@inframe\titlepage\else\frame[t]{\titlepage}\fi%
+\setbeamertemplate{background canvas}[default]%
+\setbeamertemplate{footline}[tizen]%
+}%
+\mode<all>

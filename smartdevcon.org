@@ -1,0 +1,452 @@
+# -*- org-latex-pdf-process: ("make"); ispell-local-dictionary: "british" -*-
+#+TITLE: Tizen Architecture
+#+AUTHOR: Łukasz Stelmach
+#+DATE: 12–14 September, 2013
+
+#+TOC: [pausesections]
+#+STARTUP: beamer
+#+OPTIONS: H:2 texht:t
+#+BEAMER_HEADER:
+#+BEAMER_THEME: smartdevcon2
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation,aspectratio=43,12pt]
+#+LATEX_HEADER: \usepackage{pgfpages}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \institute[SRPOL]{Samsung R\&D Institute Poland}
+#+COMMENT: http://tug.org/pipermail/xetex/2009-June/013325.html
+#+LATEX_HEADER: \renewcommand\pgfsetupphysicalpagesizes{\pdfpagewidth\pgfphysicalwidth\pdfpageheight\pgfphysicalheight}
+#+LATEX_HEADER: \AtBeginSection[]{{\setbeamertemplate{footline}{}\setbeamertemplate{background canvas}[section page]\begin{frame}<beamer>\sectionpage\end{frame}\setbeamertemplate{footline}[tizen]}}
+#+LATEX_HEADER_EXTRA: 
+#+LATEX_HEADER_EXTRA: \setbeameroption{show notes on second screen=bottom}
+#+LATEX_HEADER_EXTRA: \hypersetup{colorlinks=true,linkcolor=,urlcolor=pantone326}
+
+
+* notes								   :B_noteNH:
+  :PROPERTIES:
+  :BEAMER_env: noteNH
+  :END:
+
+Good morning everyone, my name is Łukasz Stelmach, I work for Samsung
+R&D Institute Poland and I am going to talk about Tizen and some of
+its internals.
+
+
+* Introduction to Tizen
+** notes							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+   Tizen isn't the most popular operating system yet so I suppose a
+   brief introduciton will be helpful.
+
+** Tizen
+   + Open source
+     + GNU/Linux
+     + WebKit
+     + EFL
+   + Standards-based
+     + POSIX
+     + HTML5
+   + Smart-embedded
+     + Phones
+     + Tablets
+     + IVI
+     + TV
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + It has GNU/Linux basic userland
+    + POSIX + HTML5
+    + Smart-embedded devices
+
+** Family tree \tiny (https://github.com/kumadasu/tizen-history)
+#+BEGIN_LaTeX
+  \begin{center}
+  \begin{tikzpicture}[x=1pt,y=1pt]
+  \note<1-2>{As you all probably know $\hookleftarrow$ Samsung Electronics has been
+    making mobiles for quite some time. Some of theme were smarter than
+    other.}
+  
+  \fill<2->[fill=pantone2985]( 123.5pt,  86pt) ellipse (12.5pt and 6.26pt); % Samsung
+  
+  \note<3>{In 2007, Samsung together with other manufacturers
+    established LiMo Foundation. Its mission was to create an open,
+    Linux-based software platform for mobile devices.
+    http://www.theregister.co.uk/2007/01/26/limo\_founded/}
+  \fill<3->[fill=pantone2985](  76pt,  46pt) ellipse (15pt and 6.26pt); % LiMo Foundation
+  
+  \note<4>{The foundation released two version of the platform with
+    significant contribution ported from Samsung's SLP.}
+  \fill<4-6>[fill=pantone2985](  83.7pt,  32.5pt) ellipse (12.5pt and 6.26pt); % LiMo
+  \fill<4-6>[fill=pantone2985](  89.3pt, -34.0pt) ellipse (12.5pt and 6.26pt); % LiMo4
+  \fill<4-6>[fill=pantone2985]( 112.3pt,   6pt) ellipse (12.5pt and 6.26pt); % SLP
+  
+  \note<5-6>{In the meantime, Intel, was working on its own Moblin
+    distribution. It was later merged with Nokia's Maemo to form
+    $\hookleftarrow$ MeeGo.}
+  \draw<6>[draw=pantone2985,line width=2pt]%
+      ( -49.0,   -20.0) .. controls (-49,28) and (-37.7,28) .. (-37.4, 86);
+  \fill<5->[fill=pantone2985]( -36.7pt,  86pt) ellipse (12.5pt and 6.26pt); % Intel
+  \fill<6>[fill=pantone2985]( -49.0pt, -20.5pt) ellipse (12.5pt and 6.26pt); % MeeGo 1.2
+  
+  \note<7-9>{Shortly after releasing version 1.2, Intel decided to
+    discontinue developemnt of MeeGo, and join LiMo Foundation which, at
+    the same time, together with $\hookleftarrow$ Linux Foundation,
+    announced a new project named Tizen. Few months later LiMo
+    Foundation changed its name to $\hookleftarrow$ Tizen Association.}
+  \fill<8->[fill=pantone2985]( 101,  86) ellipse (12.5pt and 6.26pt); % Linux Foundation
+  \fill<9->[fill=pantone2985](  66.3pt, -34.0pt) ellipse (15pt and 6.26pt); % Tizen Association
+  
+  \note<10-11>{In 2012, the first version of Tizen SDK was released
+    $\hookleftarrow$ followed by versions 2.0 and 2.2 in 2013, which
+    provide official Native API from Samsung's Bada. }
+  \fill<10->[fill=pantone2985]( 105.1pt, -47.0pt) ellipse (25pt and 6.26pt); % Tizen 1.0
+  \fill<10->[fill=pantone2985]( 5.0pt, -47.0pt) ellipse (20pt and 6.26pt); % Tizen IVI
+  \fill<11->[fill=pantone2985]( 123.5pt, -87.0pt) ellipse (25pt and 6.26pt); % Tizen 2.0
+  \pgftext{\includegraphics[height=.75\paperheight]{tizen-history}}
+  \end{tikzpicture}
+  %% \setlength{\unitlength}{1pt}
+  %% \begin{picture}(310,205)
+  %% \color{black}\thinlines
+  %% \uncover<2->{\put(262,182){\includegraphics[scale=.25]{ellip_p2985.eps}}} % Samsung
+  %% \uncover<3->{\put(262,182){\vector(-3, -4){20}}}
+  %% \uncover<3->{\put(215.5,142){\includegraphics[scale=.25]{ellip_p2985.eps}}} % LiMo Foundation
+  %% \uncover<4->{\put(251,102){\includegraphics[scale=.25]{ellip_p2985.eps}}} % SLP
+  %% \uncover<5->{\put(105,182){\includegraphics[scale=.25]{ellip_p2985.eps}}} % Intel
+  %% \uncover<6->{\put(93.5, 75.5){\includegraphics[scale=.25]{ellip_p2985.eps}}} % MeeGo
+  %% \uncover<7->{\put(120, 82){\vector(4, -1){85}}} % MeeGo
+  %% \uncover<8->{\put(206.5,62){\includegraphics[scale=.25]{ellip_p2985.eps}}} % Tizen Association
+  %% \uncover<9->{\put(245,49){\includegraphics[scale=.25]{ellip_p2985.eps}}} % Tizen 1.0
+  %% \uncover<10->{\put(264,9){\includegraphics[scale=.25]{ellip_p2985.eps}}} % Tizen 2.0
+  %% \put(0,0){\includegraphics[width=1.2\paperheight,height=.8\paperheight]{tizen-history}}%
+  %% \end{picture}
+  \end{center}
+#+END_LaTeX
+
+** Tizen's origins, things to remember
+   + LiMo \to Tizen Association
+   + Samsung + Intel
+   + Tizen \neq MeeGo
+   + Tizen has got few bits from MeeGo
+     + Connman
+     + oFono
+     + BlueZ
+     + RPM
+     + staff
+   + I assure you we are open. http://www.tizen.org
+
+*** note							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    The things I would like you to remember are:
+
+    + Tizen Association continues efforts of LiMo foundation
+    + Samsung and Intel are the main contributors to Tizen
+    + Tizen is not MeeGo although Intel brought some useful bits from it.
+
+#+LATEX:
+
+    The first releases have been developed in a closed environment and
+    released afterwards. The development process of the 3.0 is fully
+    transparent. http://www.tizen.org
+* Inside Tizen
+** Layers
+#+LaTeX: \begin{center}\includegraphics[height=.75\paperheight]{Architecture.eps}\end{center}
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    Layers... we like them don't we. The picture is pretty simple
+    while still being true, unbelivable.
+
+    + Kernel (/mainline/)
+    + Core (GNU + Tizen)
+    + APIs (Bada + WebRuntime)
+    + Applications (C++ + HTML)
+
+    In my team we develop one of many parts of the Core layer. This is
+    what I know best and it isn't exposed directly to developers so I
+    would like to talk about it a little.
+
+** Tizen Core Services
+   :PROPERTIES:
+   :BEAMER_envargs: allowframebreaks
+   :END:
+*** services 1						     :B_column:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :BEAMER_col: 0.5
+    :END:
+    + Application Framework
+    + Base
+    + Connectivity
+    + Graphics & UI
+    + Location
+    + Messageing
+*** services 2						     :B_column:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: column
+    :END:
+    + Multimedia
+    + PIM
+    + Security
+    + System
+    + Telephony
+    + Web
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+     Application Framework, Base, Connectivity, Graphics & UI,
+     Location, Messageing, Multimedia, PIM, Security, System,
+     Telephony, Web
+
+** Base
+   + A basic self-contained GNU/Linux userland
+   + Boots to console with a login prompt
+   + Toolchain
+   + Support libraries
+     + database access
+     + i18n
+     + XML and others
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+   Although this part is completely invisible to the end-user and even
+   developers aren't supposed to be exposed to it to much it is
+   crucial that it works flawlessly. To make sure it does we put here
+   as much free software as possible.
+
+   + gnu/linux userland
+   + systemd as init
+   + gcc toolchain
+   + some libraries
+** Application Framework
+   + Application state management
+   + Pre-defined services like dialer
+   + Notifications
+   + Package management
+   + Alarm/time management
+
+** Network & Connectivity
+   + TCP/IP connection
+   + Bluetooth
+   + HTTP
+   + NFC
+   + Wi-Fi
+
+*** notes 							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    + connectivity ConnMan
+    + Bluetooth (BlueZ)
+    + HTTP: libsoup, curl
+    + NFC
+    + Wi-Fi: direct
+
+** Graphics & UI
+   + X11
+   + OpenGL
+   + Enlightenment Foundation Libraries (EFL)
+   + input methods
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + Tizen graphics stack is based on X11, we are experimenting with Wayland
+    + OpenGL
+    + EFL present, several applications use it but not an official API
+    + Input Methods
+
+** Location
+   + GeoClue
+     + GPS
+     + WiFi
+     + 3G
+     + GeoIP
+     + Geocoding
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    Location services are based on GeoClue. Currently the following
+    we've got plugins to do the following tasks.
+
+    GPS, WiFi, 3G/Network, GeoIP, Geocoding
+
+** Messaging
+   + SMS, MMS
+   + Email
+   + Push
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Samsung is going to provide application developers with a
+    cloud-part of the push. You need to register your application and
+    you can use Samsung's cloud to forward messages for it.
+
+** Multimedia
+   + Video
+   + Audio
+   + Camera
+   + Audio Policy
+   + 3D Audio
+
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Multimedia framework is ready to support hardware codecs for
+    Video. There are ongoing works to support audio.
+
+    Audio policy, scenarios provided by PulseAudio.
+** PIM
+   + Contacts
+   + Calendar
+   + Accounts
+   + Synchronisation
+
+** Security
+   + Access control
+   + Certificates
+   + Secure storage
+   + Cryptography
+   + DRM
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    + Tizen is the first commercial-grade system to use SMACK
+
+     Certificats, Secure storage, Cryptography, DRM
+
+** System
+   + Sensors
+   + Power management
+   + System settings
+
+** Telephony
+   + Telephony services
+   + Network communication
+   + SIM management
+
+** Web
+   + WebKit: layout + rendering
+   + WebRuntime
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+   + You can find my colleagues' contribution at WebKit.org
+   + Saturday, 2013-09-14 09:00 — /Webruntime in Tizen/, Janusz Majnert (T2)
+
+** API
+*** API 1 						     :B_column:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :BEAMER_col: 0.5
+    :END:
+
+   + HTML5
+   + Native C++ (Bada)
+*** API 2 						     :B_column:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: column
+    :BEAMER_col: 0.5
+    :END:
+   + Tizen Common
+   + Application
+   + Communication
+   + Content
+   + Input/Output
+   + Social
+   + System
+   + User Interface
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Thre are two official sets of APIs: HTML5 and C++. The former
+    based on WebRuntime the latter is a Linux port of Samsung's OSP Bada
+    framework.
+
+    Those services are available through proper APIs to both native
+    and HTML5 applications.
+
+* Tizen and others
+** No numbers.							     :B_note:
+   :PROPERTIES:
+   :BEAMER_env: note
+   :END:
+   I don't want to speak about numbers. Most of you porbably, know
+   them better than I do. I'd like to show a qualitive comparison
+   between the most common mobile operatiing systems.
+** The players
+   + Android
+   + iOS
+   + RIM (BlackBerry OS, QNX)
+   + Windows Phone
+   + Tizen
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    + Windows Phone: that's becoming quite interesting
+** Areas of applications
+   + Android: pretty much anything
+   + iOS: iStuff
+   + RIM: Blackberry
+   + Windows Phone: Nokia (mostly)
+   + Tizen: pretty much anything
+** Software development
+   + Android: Java
+   + iOS: ObjectiveC
+   + RIM: Native (C/C++), HTML5, Adobe AIR, Android (BB10)
+   + Windows Phone: .NET, C++
+   + Tizen: Native (C++), HTML5
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    + iOS Developer licens
+    + RIM: most versatile
+** Software distribution
+   + Android: Play Store
+   + iOS: App Store
+   + RIM: BlackBerry World
+   + Windows Phonde: Windows Phone Store
+   + Tizen: Tizen Store and more...
+* Q&A
+** Thank you
+   Łukasz Stelmach <l.stelmach@samsung.com>
+** More About Tizen
+   + Friday, 2013-09-13
+     + 15:15 — /Creating a Tizen Application/, Kamil Grondys (T1)
+     + 17:30 — /HTML5/ Features, Wojciech Bielawski (T2)
+   + Saturday, 2013-09-14
+     + 09:00 — /Webruntime in Tizen/, Janusz Majnert (T2)
+     + 11:15 — /Porting Qt to a new Smarthone for Fun and Fame/,
+       Jarosław Staniek (T1)
+     + 11:15 — Solution for Tizen/, Michał Knapiński
+       and Michal Pawluk (T2)

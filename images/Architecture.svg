@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="452.5"
+   height="340"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="Architecture.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="242.44052"
+     inkscape:cy="207.43676"
+     inkscape:document-units="pt"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="pt"
+     inkscape:window-width="838"
+     inkscape:window-height="1029"
+     inkscape:window-x="0"
+     inkscape:window-y="19"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-712.36226)">
+    <g
+       id="g3041">
+      <g
+         id="g3036">
+        <rect
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.50000000000000000;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009"
+           width="406.67532"
+           height="40.454636"
+           x="22.912338"
+           y="977.77399"
+           ry="6.25"
+           rx="6.25" />
+        <text
+           xml:space="preserve"
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fefffa;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           x="153.44727"
+           y="1006.4505"
+           id="text3011"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3013"
+             x="153.44727"
+             y="1006.4505">Linux Kernel</tspan></text>
+      </g>
+      <g
+         id="g4261">
+        <rect
+           style="fill:#59315f;stroke:#59315f;stroke-width:2.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009-8"
+           width="406.67532"
+           height="40.454636"
+           x="22.912338"
+           y="907.87573"
+           rx="6.25"
+           ry="6.25" />
+        <text
+           xml:space="preserve"
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fefffa;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           x="146.18164"
+           y="936.68701"
+           id="text2994"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan2996"
+             x="146.18164"
+             y="936.68701">Core Services</tspan></text>
+      </g>
+      <g
+         transform="translate(-0.38802527,0.02864184)"
+         id="g4092">
+        <rect
+           style="fill:#5ccbf6;stroke:#2a3c4a;stroke-width:2.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009-8-8-7"
+           width="197.4149"
+           height="61.789902"
+           x="23.300364"
+           y="746.46729"
+           rx="6.25"
+           ry="6.25" />
+        <text
+           xml:space="preserve"
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fefffa;fill-opacity:1;stroke:#000000;stroke-width:0.625;stroke-miterlimit:4;stroke-dasharray:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           x="64.521484"
+           y="783.5849"
+           id="text3104"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="64.521484"
+             y="783.5849"
+             id="tspan3108">Web Apps</tspan></text>
+      </g>
+      <g
+         transform="translate(-0.50259398,0.02864184)"
+         id="g4086">
+        <rect
+           style="fill:#3cdbc0;stroke:#2a3c4a;stroke-width:2.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009-8-8-9-4"
+           width="197.4149"
+           height="61.789902"
+           x="232.67535"
+           y="746.46729"
+           ry="6.25"
+           rx="6.25" />
+        <text
+           xml:space="preserve"
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fefffa;fill-opacity:1;stroke:#000000;stroke-width:0.625;stroke-miterlimit:4;stroke-dasharray:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           x="262.125"
+           y="783.5849"
+           id="text3112"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3114"
+             x="262.125"
+             y="783.5849">Native Apps</tspan><tspan
+             sodipodi:role="line"
+             x="262.125"
+             y="813.5849"
+             id="tspan3116" /></text>
+      </g>
+      <g
+         id="g4165">
+        <rect
+           style="fill:#248bd1;stroke:#2a3c4a;stroke-width:2.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009-8-8"
+           width="197.54848"
+           height="40.702774"
+           x="22.912338"
+           y="837.72943"
+           rx="6.25"
+           ry="6.25" />
+        <text
+           xml:space="preserve"
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fefffa;fill-opacity:1;stroke:#000000;stroke-width:0.625;stroke-miterlimit:4;stroke-dasharray:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           x="74.395554"
+           y="866.53003"
+           id="text3118"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3120"
+             x="74.395554"
+             y="866.53003">Web API</tspan></text>
+      </g>
+      <g
+         id="g4160">
+        <rect
+           style="fill:#00b2a9;stroke:#2a3c4a;stroke-width:2.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009-8-8-9"
+           width="197.54848"
+           height="40.702774"
+           x="232.03918"
+           y="837.72943"
+           ry="6.25"
+           rx="6.25" />
+        <text
+           xml:space="preserve"
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fefffa;fill-opacity:1;stroke:#000000;stroke-width:0.625;stroke-miterlimit:4;stroke-dasharray:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           x="271.75095"
+           y="866.53003"
+           id="text3122"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="271.75095"
+             y="866.53003"
+             id="tspan3126">Native API</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

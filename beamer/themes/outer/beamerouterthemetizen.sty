@@ -1,0 +1,23 @@
+% Copytight 2013 by Samsung Electronics
+%
+% Authors:
+% Łukasz Stelmach
+
+\mode<presentation>
+\usecolortheme{tizen}
+\defbeamertemplate{footline}{title page}{}
+\defbeamertemplate*{footline}{tizen}
+{%
+  \begin{beamercolorbox}[colsep=2pt]{upper separation line foot}%
+  \end{beamercolorbox}\vskip-.5pt%
+  \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+      rightskip=3em,leftskip=3em plus 1fil]{author in head/foot}%
+      \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
+      \hfill%
+      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
+  \end{beamercolorbox}\vskip-.5pt%
+  \begin{beamercolorbox}[colsep=2pt]{lower separation line foot}%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{navigation symbols}{}
+\mode<all>
