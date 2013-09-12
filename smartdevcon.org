@@ -26,10 +26,17 @@
   :BEAMER_env: noteNH
   :END:
 
-Good morning everyone, my name is Łukasz Stelmach, I work for Samsung
-R&D Institute Poland and I am going to talk about Tizen and some of
-its internals.
+  T-43
 
+  Good morning everyone, my name is Łukasz Stelmach, I work for
+  Samsung R&D Institute Poland and I am going to talk about Tizen,
+  some of its internals and externals.
+
+  Those of you who have followed Tizen development know probably more
+  than I will tell today. I hope, however, that the rest would find my
+  presentation interesting and educating.
+
+  Questions? Ask!
 
 * Introduction to Tizen
 ** notes							   :B_noteNH:
@@ -37,7 +44,7 @@ its internals.
    :BEAMER_env: noteNH
    :END:
 
-   Tizen isn't the most popular operating system yet so I suppose a
+   Tizen isn't the most popular operating system yet, so I suppose a
    brief introduciton will be helpful.
 
 ** Tizen
@@ -58,6 +65,8 @@ its internals.
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
+
+    T-40
 
     + It has GNU/Linux basic userland
     + POSIX + HTML5
@@ -139,10 +148,12 @@ its internals.
      + staff
    + I assure you we are open. http://www.tizen.org
 
-*** note							   :B_noteNH:
+*** notes 							   :B_noteNH:
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
+
+    T-33
 
     The things I would like you to remember are:
 
@@ -162,6 +173,9 @@ its internals.
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
+
+    T-32
+
     Layers... we like them don't we. The picture is pretty simple
     while still being true, unbelivable.
 
@@ -220,6 +234,8 @@ its internals.
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
+    T-30
+
    Although this part is completely invisible to the end-user and even
    developers aren't supposed to be exposed to it to much it is
    crucial that it works flawlessly. To make sure it does we put here
@@ -228,13 +244,21 @@ its internals.
    + gnu/linux userland
    + systemd as init
    + gcc toolchain
-   + some libraries
+   + libraries, pretty much the same you find on a desktop linux.
 ** Application Framework
    + Application state management
-   + Pre-defined services like dialer
+   + Pre-defined services
    + Notifications
    + Package management
    + Alarm/time management
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + Pre-defined like dialer
+    + Notifications about system events: batteries, orientation (sensors)
 
 ** Network & Connectivity
    + TCP/IP connection
@@ -252,12 +276,11 @@ its internals.
     + HTTP: libsoup, curl
     + NFC
     + Wi-Fi: direct
-
 ** Graphics & UI
    + X11
    + OpenGL
    + Enlightenment Foundation Libraries (EFL)
-   + input methods
+   + Input methods
 
 *** notes							   :B_noteNH:
     :PROPERTIES:
@@ -306,8 +329,7 @@ its internals.
    + Audio Policy
    + 3D Audio
 
-
-*** notes							   :B_noteNH:
+*** notes 							   :B_noteNH:
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
@@ -387,21 +409,37 @@ its internals.
     :BEAMER_env: noteNH
     :END:
 
-    Thre are two official sets of APIs: HTML5 and C++. The former
-    based on WebRuntime the latter is a Linux port of Samsung's OSP Bada
-    framework.
+    T-20
 
     Those services are available through proper APIs to both native
     and HTML5 applications.
+
+    Thre are two official sets of APIs: HTML5 and C++. The former
+    based on WebRuntime the latter is a Linux port of Samsung's OSP
+    Bada framework. The former is cross platform the latter is not. If
+    you want to know more about HTML5 runtime we will meet at Janusz
+    Majnert's talk on Saturday.
+
+    You may ask what about: EFL, Qt? The former, although present, is
+    not a part of the official API. The latter isn't there, officially.
+    Qt has been ported to Tizen and Jarosław Staniek will tell you
+    more about it on Saturday too.
 
 * Tizen and others
 ** No numbers.							     :B_note:
    :PROPERTIES:
    :BEAMER_env: note
    :END:
-   I don't want to speak about numbers. Most of you porbably, know
-   them better than I do. I'd like to show a qualitive comparison
-   between the most common mobile operatiing systems.
+   I don't want to speak about numbers on the following slides. The
+   numbers are different everytime you look at them. Besiedes, most of
+   you porbably, know them better than I do. I'd like to show a
+   qualitive comparison between the most common mobile operatiing
+   systems... and Tizen.
+
+   This is my own view and I am not an application developer. My
+   conclusions may not apply to you if you are one. If it happens so,
+   I will be glad to discuss it during Q&A part.
+
 ** The players
    + Android
    + iOS
@@ -412,31 +450,88 @@ its internals.
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
+    T-18
+
+    + Android: Aparently Google wants too much leaving little for:
+      manufacturers, operators (developers?).
+    + iOS: to me it seems like it too much depend on fashion/trend.
     + Windows Phone: that's becoming quite interesting
+    + Tizen: new kid on the block. The first mobile devices are going
+      to be released by the end of this year.
+
 ** Areas of applications
    + Android: pretty much anything
    + iOS: iStuff
-   + RIM: Blackberry
+   + RIM: Blackberry phones and tablets
    + Windows Phone: Nokia (mostly)
    + Tizen: pretty much anything
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    T-16
 ** Software development
    + Android: Java
    + iOS: ObjectiveC
    + RIM: Native (C/C++), HTML5, Adobe AIR, Android (BB10)
    + Windows Phone: .NET, C++
-   + Tizen: Native (C++), HTML5
+   + Tizen: Native (C++), HTML5, (Android via ACL)
 *** notes							   :B_noteNH:
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
-    + iOS Developer licens
+    T-14
+
+    + iOS Developer license to run a code on a device
     + RIM: most versatile
+    + ACL: Andoroid APK to Tizen TPK with a little help from OpenMobile
+** Platform development
+   + Android: open (?)
+   + iOS: closed
+   + RIM: closed
+   + Windows Phone: closed
+   + Tizen: open (!)
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    T-12
+
+    Android dev. model is technicaly open. There are community
+    driven distributions like CyanogenMod. However, Android does not
+    run on the mainline Linux kernel. Google, driven by NIH
+    syndrome, wrote a lot of code just to make sure they don't have
+    any GPL code in userland.
+
+    Tizen: Is becoming an opensource project. Tizen is going to run on
+    mainline kernel because we push our changes upstream. As I
+    mentioned before there we've got GPL userland and it's not a
+    problem for us. If some piece software needs modification to meet
+    our needs we work with its developers to push changes upstream and
+    get them back with the latest version.
+
 ** Software distribution
    + Android: Play Store
    + iOS: App Store
    + RIM: BlackBerry World
-   + Windows Phonde: Windows Phone Store
-   + Tizen: Tizen Store and more...
+   + Windows Phone: Windows Phone Store
+   + Tizen: Tizen Store (?)
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+    T-10
+
+    + Android: Play or not, no problem.
+    + iOS: I do not follow the news and I remember that in the
+      beginning application development was quite risky as one could
+      find one day that Apple didn't like an app that took three
+      months of full time development and was supposed to be the
+      beginning of a start-up.
+    + Tizen store is open for developers. How it is going to work? TBD
 * Q&A
 ** Thank you
    Łukasz Stelmach <l.stelmach@samsung.com>

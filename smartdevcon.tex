@@ -1,4 +1,4 @@
-% Created 2013-09-11 śro 15:35
+% Created 2013-09-12 czw 02:13
 \documentclass[presentation,aspectratio=43,12pt]{beamer}
 \usepackage{fontspec}
 \usepackage{fixltx2e}
@@ -6,20 +6,20 @@
 \usepackage{longtable}
 \usepackage{float}
 \usepackage{wrapfig}
-\usepackage{soul}
+\usepackage[normalem]{ulem}
 \usepackage{textcomp}
 \usepackage{marvosym}
 \usepackage{wasysym}
-\usepackage{latexsym}
 \usepackage{amssymb}
 \usepackage{amstext}
 \usepackage{hyperref}
 \tolerance=1000
-          \usepackage{pgfpages}
+\usepackage{pgfpages}
 \usepackage{tikz}
 \institute[SRPOL]{Samsung R\&D Institute Poland}
 \renewcommand\pgfsetupphysicalpagesizes{\pdfpagewidth\pgfphysicalwidth\pdfpageheight\pgfphysicalheight}
-\AtBeginSection[]{{\setbeamertemplate{footline}{}\setbeamertemplate{background canvas}[section page]\begin{frame}<beamer>\sectionpage\end{frame}\setbeamertemplate{footline}[tizen]}}\setbeameroption{show notes on second screen=bottom}
+\AtBeginSection[]{{\setbeamertemplate{footline}{}\setbeamertemplate{background canvas}[section page]\begin{frame}<beamer>\sectionpage\end{frame}\setbeamertemplate{footline}[tizen]}}
+\setbeameroption{show notes on second screen=bottom}
 \hypersetup{colorlinks=true,linkcolor=,urlcolor=pantone326}
 \usetheme{smartdevcon2}
 \author{Łukasz Stelmach}
@@ -28,7 +28,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 24.1.1 (Org mode 8.0.3)}}
+  pdfcreator={Emacs 24.2.1 (Org mode 8.1.1)}}
 \begin{document}
 
 \maketitle
@@ -38,13 +38,20 @@
 
 
 
-\note{Good morning everyone, my name is Łukasz Stelmach, I work for Samsung
-R\&D Institute Poland and I am going to talk about Tizen and some of
-its internals.}
+\note{T-43
 
+Good morning everyone, my name is Łukasz Stelmach, I work for
+Samsung R\&D Institute Poland and I am going to talk about Tizen,
+some of its internals and externals.
+
+Those of you who have followed Tizen development know probably more
+than I will tell today. I hope, however, that the rest would find my
+presentation interesting and educating.
+
+Questions? Ask!}
 \section{Introduction to Tizen}
 \label{sec-2}
-\note{Tizen isn't the most popular operating system yet so I suppose a
+\note{Tizen isn't the most popular operating system yet, so I suppose a
 brief introduciton will be helpful.}
 \begin{frame}[label=sec-2-2]{Tizen}
 \begin{itemize}
@@ -68,7 +75,9 @@ brief introduciton will be helpful.}
 \end{itemize}
 \end{itemize}
 
-\note{\begin{itemize}
+\note{T-40
+
+\begin{itemize}
 \item It has GNU/Linux basic userland
 \item POSIX + HTML5
 \item Smart-embedded devices
@@ -152,7 +161,9 @@ brief introduciton will be helpful.}
 \item I assure you we are open. \url{http://www.tizen.org}
 \end{itemize}
 
-\note{The things I would like you to remember are:
+\note{T-33
+
+The things I would like you to remember are:
 
 \begin{itemize}
 \item Tizen Association continues efforts of LiMo foundation
@@ -170,7 +181,9 @@ transparent. \url{http://www.tizen.org}}
 \label{sec-3}
 \begin{frame}[label=sec-3-1]{Layers}
 \begin{center}\includegraphics[height=.75\paperheight]{Architecture.eps}\end{center}
-\note{Layers\ldots{} we like them don't we. The picture is pretty simple
+\note{T-32
+
+Layers\ldots{} we like them don't we. The picture is pretty simple
 while still being true, unbelivable.
 
 \begin{itemize}
@@ -227,7 +240,9 @@ Telephony, Web}
 \item XML and others
 \end{itemize}
 \end{itemize}
-\note{Although this part is completely invisible to the end-user and even
+\note{T-30
+
+Although this part is completely invisible to the end-user and even
 developers aren't supposed to be exposed to it to much it is
 crucial that it works flawlessly. To make sure it does we put here
 as much free software as possible.
@@ -236,18 +251,23 @@ as much free software as possible.
 \item gnu/linux userland
 \item systemd as init
 \item gcc toolchain
-\item some libraries
+\item libraries, pretty much the same you find on a desktop linux.
 \end{itemize}}
 \end{frame}
 
 \begin{frame}[label=sec-3-4]{Application Framework}
 \begin{itemize}
 \item Application state management
-\item Pre-defined services like dialer
+\item Pre-defined services
 \item Notifications
 \item Package management
 \item Alarm/time management
 \end{itemize}
+
+\note{\begin{itemize}
+\item Pre-defined like dialer
+\item Notifications about system events: batteries, orientation (sensors)
+\end{itemize}}
 \end{frame}
 \begin{frame}[label=sec-3-5]{Network \& Connectivity}
 \begin{itemize}
@@ -266,12 +286,13 @@ as much free software as possible.
 \item Wi-Fi: direct
 \end{itemize}}
 \end{frame}
+
 \begin{frame}[label=sec-3-6]{Graphics \& UI}
 \begin{itemize}
 \item X11
 \item OpenGL
 \item Enlightenment Foundation Libraries (EFL)
-\item input methods
+\item Input methods
 \end{itemize}
 
 \note{\begin{itemize}
@@ -316,7 +337,6 @@ you can use Samsung's cloud to forward messages for it.}
 \item Audio Policy
 \item 3D Audio
 \end{itemize}
-
 
 \note{Multimedia framework is ready to support hardware codecs for
 Video. There are ongoing works to support audio.
@@ -397,20 +417,34 @@ Certificats, Secure storage, Cryptography, DRM
 
 \end{column}
 \end{columns}
-\note{Thre are two official sets of APIs: HTML5 and C++. The former
-based on WebRuntime the latter is a Linux port of Samsung's OSP Bada
-framework.
+\note{T-20
 
 Those services are available through proper APIs to both native
-and HTML5 applications.}
+and HTML5 applications.
+
+Thre are two official sets of APIs: HTML5 and C++. The former
+based on WebRuntime the latter is a Linux port of Samsung's OSP
+Bada framework. The former is cross platform the latter is not. If
+you want to know more about HTML5 runtime we will meet at Janusz
+Majnert's talk on Saturday.
+
+You may ask what about: EFL, Qt? The former, although present, is
+not a part of the official API. The latter isn't there, officially.
+Qt has been ported to Tizen and Jarosław Staniek will tell you
+more about it on Saturday too.}
 \end{frame}
 \section{Tizen and others}
 \label{sec-4}
 \note{No numbers.
-I don't want to speak about numbers. Most of you porbably, know
-them better than I do. I'd like to show a qualitive comparison
-between the most common mobile operatiing systems.}
+I don't want to speak about numbers on the following slides. The
+numbers are different everytime you look at them. Besiedes, most of
+you porbably, know them better than I do. I'd like to show a
+qualitive comparison between the most common mobile operatiing
+systems\ldots{} and Tizen.
 
+This is my own view and I am not an application developer. My
+conclusions may not apply to you if you are one. If it happens so,
+I will be glad to discuss it during Q\&A part.}
 \begin{frame}[label=sec-4-2]{The players}
 \begin{itemize}
 \item Android
@@ -419,19 +453,27 @@ between the most common mobile operatiing systems.}
 \item Windows Phone
 \item Tizen
 \end{itemize}
-\note{\begin{itemize}
+\note{T-18
+
+\begin{itemize}
+\item Android: Aparently Google wants too much leaving little for:
+manufacturers, operators (developers?).
+\item iOS: to me it seems like it too much depend on fashion/trend.
 \item Windows Phone: that's becoming quite interesting
+\item Tizen: new kid on the block. The first mobile devices are going
+to be released by the end of this year.
 \end{itemize}}
 \end{frame}
-
 \begin{frame}[label=sec-4-3]{Areas of applications}
 \begin{itemize}
 \item Android: pretty much anything
 \item iOS: iStuff
-\item RIM: Blackberry
+\item RIM: Blackberry phones and tablets
 \item Windows Phone: Nokia (mostly)
 \item Tizen: pretty much anything
 \end{itemize}
+
+\note{T-16}
 \end{frame}
 
 \begin{frame}[label=sec-4-4]{Software development}
@@ -440,22 +482,61 @@ between the most common mobile operatiing systems.}
 \item iOS: ObjectiveC
 \item RIM: Native (C/C++), HTML5, Adobe AIR, Android (BB10)
 \item Windows Phone: .NET, C++
-\item Tizen: Native (C++), HTML5
+\item Tizen: Native (C++), HTML5, (Android via ACL)
 \end{itemize}
-\note{\begin{itemize}
-\item iOS Developer licens
+\note{T-14
+
+\begin{itemize}
+\item iOS Developer license to run a code on a device
 \item RIM: most versatile
+\item ACL: Andoroid APK to Tizen TPK with a little help from OpenMobile
 \end{itemize}}
 \end{frame}
 
-\begin{frame}[label=sec-4-5]{Software distribution}
+\begin{frame}[label=sec-4-5]{Platform development}
+\begin{itemize}
+\item Android: open (?)
+\item iOS: closed
+\item RIM: closed
+\item Windows Phone: closed
+\item Tizen: open (!)
+\end{itemize}
+
+\note{T-12
+
+Android dev. model is technicaly open. There are community
+driven distributions like CyanogenMod. However, Android does not
+run on the mainline Linux kernel. Google, driven by NIH
+syndrome, wrote a lot of code just to make sure they don't have
+any GPL code in userland.
+
+Tizen: Is becoming an opensource project. Tizen is going to run on
+mainline kernel because we push our changes upstream. As I
+mentioned before there we've got GPL userland and it's not a
+problem for us. If some piece software needs modification to meet
+our needs we work with its developers to push changes upstream and
+get them back with the latest version.}
+\end{frame}
+\begin{frame}[label=sec-4-6]{Software distribution}
 \begin{itemize}
 \item Android: Play Store
 \item iOS: App Store
 \item RIM: BlackBerry World
-\item Windows Phonde: Windows Phone Store
-\item Tizen: Tizen Store and more\ldots{}
+\item Windows Phone: Windows Phone Store
+\item Tizen: Tizen Store (?)
 \end{itemize}
+
+\note{T-10
+
+\begin{itemize}
+\item Android: Play or not, no problem.
+\item iOS: I do not follow the news and I remember that in the
+beginning application development was quite risky as one could
+find one day that Apple didn't like an app that took three
+months of full time development and was supposed to be the
+beginning of a start-up.
+\item Tizen store is open for developers. How it is going to work? TBD
+\end{itemize}}
 \end{frame}
 
 \section{Q\&A}
@@ -481,5 +562,5 @@ and Michal Pawluk (T2)
 \end{itemize}
 \end{itemize}
 \end{frame}
-% Emacs 24.1.1 (Org mode 8.0.3)
+% Emacs 24.2.1 (Org mode 8.1.1)
 \end{document}
