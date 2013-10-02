@@ -2,9 +2,7 @@
 TEXINPUTS=":.//"
 TEXMFDBS=.:$(shell kpsewhich --show-path=ls-R)
 
-all:
-	test -f ls-R || make ls-R
-	make smartdevcon.pdf
+all:	ls-R smartdevcon.pdf
 
 .PHONY: ls-R
 
