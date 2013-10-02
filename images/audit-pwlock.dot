@@ -1,0 +1,30 @@
+digraph graphname {
+#rankdir=LR;
+edge [color=green];
+##"/opt/var/kdb/db/pwlock/first_boot" -- "/usr/apps/org.tizen.pwlock/bin/pwlock";
+##"/opt/var/kdb/db/pwlock/first_boot" -- "/usr/bin/starter";
+#"/opt/var/kdb/db/menu_widget/regionformat" -- "/usr/apps/org.tizen.pwlock/bin/pwlock";
+#"/var/run/memory/pwlock/state" -- "/usr/apps/org.tizen.pwlock/bin/pwlock";
+"/var/run/memory/starter/sequence" -> "/usr/apps/org.tizen.pwlock/bin/pwlock";
+"/usr/bin/starter" -> "/var/run/memory/starter/sequence";
+"/usr/apps/org.tizen.pwlock/bin/pwlock" -> "/var/run/memory/telephony/tapi_state"
+##"/var/run/memory/telephony/telephony_ready" -- "/usr/apps/org.tizen.pwlock/bin/pwlock";
+#"/usr/bin/starter" -> "/opt/var/kdb/db/setting/menuscreen/package_name"
+
+edge [color=red];
+"/usr/bin/telephony-daemon" -> "/var/run/memory/telephony/tapi_state";
+##"/usr/bin/telephony-daemon" -- "/var/run/memory/telephony/telephony_ready";
+"/usr/bin/starter" -> "/var/run/memory/starter/sequence";
+
+edge [color=blue];
+#"/usr/apps/org.tizen.pwlock/bin/pwlock" -- "/opt/var/kdb/db/menu_widget/language";
+#"/usr/apps/org.tizen.pwlock/bin/pwlock" -- "/opt/var/kdb/db/menu_widget/regionformat";
+#"/usr/apps/org.tizen.pwlock/bin/pwlock" -- "/opt/var/kdb/db/menu_widget/regionformat_time1224";
+#"/usr/apps/org.tizen.pwlock/bin/pwlock" -- "/var/run/memory/call/state";
+#"/usr/apps/org.tizen.pwlock/bin/pwlock" -- "/var/run/memory/sysman/battery_status_low";
+"/usr/apps/org.tizen.pwlock/bin/pwlock"-> "/var/run/memory/telephony/tapi_state";
+
+edge [color=black];
+"/usr/bin/starter" -> "/usr/apps/org.tizen.pwlock/bin/pwlock";
+"/usr/bin/starter" -> "/usr/bin/menu-daemon"
+}

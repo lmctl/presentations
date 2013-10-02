@@ -1,0 +1,173 @@
+% Copytight 2013 by Samsung Electronics
+%
+% Authors:
+% Łukasz Stelmach
+%
+% Minor tweaks for jesien.org conference:
+% Karol Lewandowski
+\mode<presentation>
+
+%%% Fonts
+\setsansfont{Arial}
+% PowerPoint [bp]   Beamer
+% 14pt               8.85pt
+% 18pt              11.38pt
+% 20pt              12.64pt
+% 36pt              22.75pt
+% Assume normalsize is 12pt
+%\newfontfamily{\opensanslight}{Open Sans Light}
+\newfontfamily{\opensanslight}{Arial}
+\setbeamerfont{title}{size=\fontsize{16}{19}\selectfont,series=\bfseries}
+\setbeamerfont{section title}{size=\LARGE,series=\normalfont}
+\setbeamerfont{section title}{size=\fontsize{22.75}{27.30},series=\normalfont}
+\setbeamerfont{author}{size=\fontsize{11.8}{13}\selectfont}
+\setbeamerfont{institute}{size=\fontsize{11.8}{12}\selectfont}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize,series=\bfseries}
+\setbeamerfont{itemize/enumerate subbody}{size=\small,series=\normalfont}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize,series=\normalfont}
+
+%%% Colours
+\usecolortheme{tizen}
+\setbeamercolor{author}{fg=pantone2925}
+\setbeamercolor{institute}{fg=pantone2925}
+\setbeamercolor{date}{fg=pantone2925}
+\setbeamercolor{background canvas}{bg=TizenWhite}
+
+\setbeamercolor{normal text}{fg=pantone432,bg=}
+\setbeamercolor{alerted text}{fg=pantone519}
+\setbeamercolor{structure}{fg=pantone432}
+\setbeamercolor{section name}{fg=pantone432}
+\setbeamercolor{subsection name}{fg=pantone432}
+
+%\setbeamercolor{title}{bg=white!25!black}
+\setbeamercolor{headline on title page}{fg=TizenWhite,bg=pantone432}
+\setbeamercolor{footline}{bg=pantone2925,fg=TizenWhite}
+\setbeamercolor{author in head/foot}{bg=,fg=black}
+\setbeamercolor{institute in head/foot}{bg=,fg=TizenWhite}
+
+
+%\useinnertheme{tizen}
+
+% powerpoint 720x405.36 10"x5.63"
+% beamer 453.54x255.12 pt 16/9
+% beamer 362.83x272.13 pt 4/3
+% logo: 1076x358px 207x69pt
+% logo: 1145x156
+
+\defbeamertemplate{footline}{title page}{}
+\defbeamertemplate*{footline}{tizen}
+{%
+  \addtolength{\textwidth}{.5pt}
+  \begin{beamercolorbox}[ht=0.078\paperheight,dp=0.025\paperheight,%
+      rightskip=7bp,leftskip=0.085\paperheight plus 1fil]{footline}%
+      \leavevmode{\usebeamerfont{author in head/foot}\insertframenumber}%
+      \hfill%
+      \raisebox{-3.4bp}{\includegraphics[height=22.3bp]{Tizen-Lockup-White-On-P2925.png}}%
+  \end{beamercolorbox}%
+  \vskip-.5pt%
+}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+% Inner
+\defbeamertemplate{background canvas}{title page}%
+{{%
+    \vbox to \paperheight {
+    \vskip12.5pt
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \reflectbox{\includegraphics[height=1\paperheight,width=1.778\paperheight]{Tizen_Pinwheel_Secondary_Confetti_Frame.jpg}}%
+}}}%
+
+\defbeamertemplate{background canvas}{part page}
+{{%
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \includegraphics[height=\paperheight,width=1.7778\paperheight]{Tizen_WhiteFold_3.jpg}
+}}%
+
+\defbeamertemplate{background canvas}{section page}
+{{%
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \includegraphics[height=\paperheight,width=1.778\paperheight]{Tizen_WhiteFold_3.jpg}
+}}%
+
+\defbeamertemplate{background canvas}{subsection page}
+{{%
+    \newdimen\bgw\bgw=1.778\paperheight\advance\bgw by -1\paperwidth\hskip-\bgw%
+    \includegraphics[height=\paperheight,width=1.7778\paperheight]{Tizen_WhiteFold_3.jpg}
+}}%
+
+\setbeamertemplate{title page}
+{%
+  %\newdimen\t\t=0.65em\showthe\t 7.79993pt.
+  %\showthe\paperheight 256.0748pt.
+  \vskip-.65em%
+  \begin{beamercolorbox}[wd=1.01\paperwidth,ht=60bp,dp=5.5bp,leftskip=8.5bp]%
+    {headline on title page}%
+    %\includegraphics[width=265.573770492bp]{jesien-logo.png}\par
+      \LARGE{jesień linuksowa | jesien.org}%
+    \vskip0pt%
+    \hbox to 264.5bp{%
+      \hskip0pt plus 1fil\fontsize{9.65}{9.65}\opensanslight11-13 Październik 2013 - Szczyrk, Polska}%
+    \vskip0pt plus 1fil
+  \end{beamercolorbox}
+  \vskip12pt%
+  \newdimen\bw\bw=190pt%
+  \hskip-20pt\vbox to 180pt{%
+  \vbox to 84pt {%
+  \begin{beamercolorbox}[right,wd=\bw,sep=0pt]{title}%
+    \usebeamerfont{title}%
+    \rule[-.39ex]{0pt}{1em}\inserttitle\rule[-.39ex]{0pt}{1em}
+    %\makeatletter{{\f@size~pt}}\makeatother\par
+%\\Lorem ipsum dolor sit amet
+%enim. Etiam ullamcorper.
+%Suspendisse a
+%pellentesque dui, non felis.
+%Maecenas
+%malesuada elit lectus felis, malesuada
+%ultricies. Curabitur et ligula.
+%Ut molestie a, ultricies porta urna.
+  \end{beamercolorbox}%
+  }
+  \vskip0pt minus 70pt%
+  \begin{beamercolorbox}[right,wd=\bw,sep=1pt]{author}%
+    \usebeamerfont{author}%
+    \rule[-.39ex]{0pt}{1em}\insertauthor\rule[-.39ex]{0pt}{1em}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[right,wd=\bw,sep=1pt]{institute}%
+    \usebeamerfont{institute}%
+    \rule[-.39ex]{0pt}{1em}\insertinstitute\rule[-.39ex]{0pt}{1em}%
+%\\Lorem ipsum dolor sit amet enim. Etiam
+%ullamcorper. Suspendisse a
+%pellentesque dui, non felis. Maecenas
+%malesuada elit lectus felis, malesuada
+%ultricies. Curabitur et ligula. Ut molestie
+%a, ultricies porta urna. Vestibulum
+%commodo volutpat a, convallis ac,
+%laoreet enim. Phasellus fermentum in,
+%dolor. Pellentesque facilisis. Nulla
+% imperdiet sit amet magna.
+  \end{beamercolorbox}%
+  \vskip10pt minus 10pt
+  }
+}
+
+\setbeamertemplate{section page}%
+{%
+  \vskip.78\paperheight plus 1filll%
+  \begin{beamercolorbox}[left]{part title}%
+    \usebeamerfont{section title}\insertsection%
+  \end{beamercolorbox}%
+  \vskip.2\paperheight plus 1filll%
+}%
+
+\renewcommand\maketitle%
+{%
+\setbeamertemplate{footline}[title page]%
+\setbeamertemplate{headline}[title page]%
+\setbeamertemplate{background canvas}[title page]%
+\ifbeamer@inframe\titlepage\else\frame[t]{\titlepage}\fi%
+\setbeamertemplate{background canvas}[default]%
+\setbeamertemplate{headline}[tizen]%
+\setbeamertemplate{footline}[tizen]%
+}%
+
+\mode<all>

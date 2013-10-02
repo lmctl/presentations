@@ -1,0 +1,753 @@
+# -*- org-latex-pdf-process: ("make"); ispell-local-dictionary: "british" -*-
+#+TITLE: Tizen, czyli trudna droga od systemu wbudowanego do nowoczesnego GNU/Linuksa
+#+AUTHOR: Karol Lewandowski
+#+DATE: 11–13 Październik, 2013
+
+#+TOC: [pausesections]
+#+STARTUP: beamer
+#+OPTIONS: H:2 texht:t
+#+BEAMER_HEADER:
+#+BEAMER_THEME: jesien
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation,aspectratio=43,12pt]
+#+LATEX_HEADER: \usepackage{pgfpages}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \institute[SRPOL]{Samsung R\&D Institute Poland}
+#+COMMENT: http://tug.org/pipermail/xetex/2009-June/013325.html
+#+LATEX_HEADER: \renewcommand\pgfsetupphysicalpagesizes{\pdfpagewidth\pgfphysicalwidth\pdfpageheight\pgfphysicalheight}
+#+LATEX_HEADER: \AtBeginSection[]{{\setbeamertemplate{footline}{}\setbeamertemplate{background canvas}[section page]\begin{frame}<beamer>\sectionpage\end{frame}\setbeamertemplate{footline}[tizen]}}
+#+LATEX_HEADER_EXTRA:
+#+COMMENT: LATEX_HEADER_EXTRA: \setbeameroption{show notes on second screen=left}
+#+LATEX_HEADER_EXTRA: \hypersetup{colorlinks=true,linkcolor=,urlcolor=pantone326}
+
+
+* COMMENT notes 						   :B_noteNH:
+  :PROPERTIES:
+  :BEAMER_env: noteNH
+  :END:
+
+Witam serdecznie. Nazywam się Karol Lewandowski i pracuję w firmie
+Samsung.  Dziś mam przyjemność/okazję opowiedzieć parę słów o
+projekcie Tizen, czyli czymś o czym, jak zgaduję, większość audiencji
+słyszała, ale mniejszość, jeśli ktokolwiek miał okazję oglądać z
+bliska.
+
+
+
+* COMMENT Streszczenie
+
+** Streszczenie
+
+  ``Celem prezentacji jest przybliżenie i być może zainteresowanie
+  uczestników z rozwiązaniami przyjętymi w budowie projektu Tizen.
+
+  Autor dokona przeglądu zagadnień związanych z budową dystrybucji
+  GNU/Linuksa i przedstawi ich rozwiązania zastosowane w projekcie -
+  od systemu kompilacji skrośnej, przez init(8), optymalizację czasu
+  uruchamiania aż po zagadnienia związane z niezawodnością i
+  bezpieczeństwem systemu.''
+
+
+* Ta prezentacja nie jest o...
+
+** ... produktach
+
+   "Kiedy będzie wykorzystujący Tizena:
+
+   + telefon
+   + telewizor
+   + samochód
+   + czołg(?)"
+
+*** notes 							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+   Płytki uruchomieniowe i deweloperskie (ale nie produkty):
+
+   + RD-PQ Odroid, Origen, Armdale
+
+   Kernelu - temat na /cykl/ prezentacji
+
+   + Wsparcie dla platformy Samsung Exynos (sterowniki SoC)
+   + DMA-BUF
+   + Video4Linux2 Multiplane
+   + Contigous Memory Allocator (CMA)
+
+
+** Więc?
+
+   Budowanie solidnej bazy systemu operacyjnego, czyli dystrybucji
+   GNU/Linuksa.
+
+
+* Czym jest Tizen?
+
+** Tizen: Dystrybucja GNU/Linuksa
+
+  + Dystrybucja GNU/Linuksa ze standardowymi komponentami:
+    + Jądro Linux
+    + Narzędzia GNU
+    + Xorg
+
+  + ... jak również trochę mniej standardowymi:
+    + Enlightenment
+    + Wayland (opcja)
+    + connman
+    + ...
+
+*** notes 							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+   Co budujemy?
+
+** Tizen: Rozszerzenia
+
+  + Messaging (SMS, MMS, Email)
+  + Audio Policy (routing)
+  + PIM (Contacts, Calendar, Accounts)
+  + Sensors
+  + System settings
+  + Telephony services
+  + SIM management
+
+*** notes 							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+   Wszystko dostępne na tizen.org.
+
+
+** Tizen: Dystrybucja oprogramowania
+
+  + Niestandardowy (dla GNU/Linuksa) pomysł na tworzenie i dystrybucję
+    aplikacji:
+
+    + JavaScript (W3C APIs + specyficzne dla Tizena)
+    + C++ (Bada API)
+
+  + Dystrybucja oprogramowania - "Tizen Store"
+
+* Archeologia
+
+** notes							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+   Trzy słowa o historii - czyli skąd przychodzimy i dokąd zmierzamy.
+
+
+** Historia \tiny(https://github.com/kumadasu/tizen-history)
+#+BEGIN_LaTeX
+  \begin{center}
+  \begin{tikzpicture}[x=1pt,y=1pt]
+  \fill<2->[fill=pantone2985]( 112.3pt,   6pt) ellipse (12.5pt and 6.26pt); % SLP
+  \draw<2>[draw=pantone2985,line width=2pt]%
+      ( 112.3,   6.0) .. controls (105.1, -47) .. (105.1, -47.0);
+  \fill<2->[fill=pantone2985]( 105.1pt, -47.0pt) ellipse (25pt and 6.26pt); % Tizen 1.0
+
+  \pgftext{\includegraphics[height=.75\paperheight]{tizen-history}}
+  \end{tikzpicture}
+  \end{center}
+#+END_LaTeX
+
+
+* Samsung Linux Platform
+
+** Samsung Linux Platform (SLP)
+
+   * System operacyjny firmy Samsung oparty na GNU/Linuksie
+
+   * SLP zaczynał jako system wbudowany
+
+*** notes 							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+    Systemy wbudowane są inne.
+
+    Zaczynając projekt firma nie miała dużego doświadczenia z
+    Linuksem.  Budowała małe, wbudowane systemy (bez jednostki
+    zarządzania pamięcią - MMU).
+
+
+   * COMMENT Samsung = firma produkująca sprzęt i systemy wbudowane (Bada)
+
+** System wbudowany
+
+    Cechy systemu wbudowanego:
+
+    + Realizuje jedną dobrze zdefiniowaną funkcję
+    + (Typowo) Preinstalowany
+    + <2-> Bardzo mocno związany z produktem
+    + <2-> Produkt związany z datą wydania
+
+    #+BEAMER: \pause\vskip1cm
+
+    (Daty wydania nie zawsze są realne.)
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Oprogramowanie integralną częścią produktu.
+
+    Reżim czasowy - quick fix and dirty hack
+
+
+** System wbudowany (konsekwencje)
+
+   + "Optymalizowany" pod konkretny sprzęt (sleep\nbsp{}42)
+
+   + <2-> Kontrola dostępu nie zawsze traktowana z\nbsp{}należytą uwagą
+     (/dev/exynos-mem)
+
+   + <3-> System bardzo okrojony (braki narzędzi lub dostępne ich
+     zubożone wersje)
+
+   + <4-> Mnogość rozwiązań tymczasowych (pliki binarne w
+     repozytorium)
+
+
+*** notes 							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+   + Pliki binarne w repo - nie działa w przypadku wprowadzenia nowego
+     sprzętu
+
+   + Jaki sens ma kontrola dostępu w systemie bez MMU?
+
+   Powyższe problemy wynikają z:
+
+   + reżimu czasowego
+
+   + kiepskich/niewygodnych narzędzi wsparcia (kompilacji)
+
+   + braku systemowych rozwiązań (init system który dostarcza
+      wymagane funkcjonalności zamiast tylko być)
+
+
+
+** SLP(2) circa 2010
+
+   + scratchbox(1) do kompilacji skrośnej
+   + init(8) z busyboksa
+   + Większość procesów działa z uprawnieniami roota
+   + Pakiety .deb do dystrybucji oprogramowania
+
+
+   + W oryginalnym zamyśle "projektowany" na urządzenia smartphone
+
+*** notes 							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Wszystko z powyższego zmieniło się z czasem, bo zmieniły się aspiracje.
+
+*** COMMENT notes 						   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Problemy wyniesione ze świata wbudowanego (MMU-less)
+
+   + (NIE ten tytuł) kompilacja oprogramowania na sprzęt, który nie zawsze istnieje
+
+   + "skompilowałem binarkę i wrzuciłem do repo, gdzie problem???" (BANG - nowy sprzęt)
+    + binarki w repo ("skompilowałem sobie")
+
+
+   + "optymalizacja szyta na miarę" (szlifowanie pod konkretny sprzęt, tu działa, tu się nie uruchamia)
+
+   + brak realnej kontroli dostępu (MMUless, w uniksach == uid0)
+
+   + narzędzia - czyli system na targecie jest milon razy mniej funkcjonalny niż desktop
+
+   + Binarki w repo
+
+
+
+
+
+** Aspiracje (potencjalne zastosowania) SLP
+
+  + System operacyjny dedykowany na specjalizowane systemy:
+    + Telefony
+    + Tablety
+    + TV
+    + Aparaty fotograficzne
+    + Systemy informacyjno-rozrywkowe ("infotainment")
+    + ...
+
+    #+BEAMER: \pause
+
+  + Uniwersalny, otwarty system operacyjny na specjalizowane
+    urządzenia dla produktów firmy Samsung (i innych, wedle uznania)
+
+*** notes 							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Znamy problemy, znamy aspiracje, możemy więc zacząć naprawiać
+    problem po problemie.
+
+
+* Problem 1: Budowa oprogramowania
+
+** Cechy pożądanego środowiska budowania:
+
+   + Wygodna kompilacja skrośna istniejących projektów GNU/Linux (x86
+     -> ARM, amd64 -> x86)
+
+   + Środowisko przeźroczyste dla programistów i\nbsp{}wygodne w utrzymaniu
+
+   + Powtarzalne wyniki budowania (niezależne od środowiska
+     programisty)
+
+
+   + <2-> Niezależne środowiska dla różnych projektów, architektur sprzętowych, ...
+
+   + <2-> W pełni funcjonalny system nie wymagający praw administratora
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + Budujemy dystrybucję GNU/Linuksa - potrzebujemy systemu do
+      budowania pakietów FLOSS.
+
+    + Powtarzalne wyniki - tak jak pbuilder w debianie.
+
+    + Wygodne - przeźroczyste.
+
+
+** Wykorzystywane: scratchbox(1)
+
+   + Bazuje na zmodyfikowanym środowisku, by stworzyć iluzję systemu
+     docelowego:
+
+     + System docelowy (target) dostarcza biblioteki
+     + Narzędzia (tools) dostarczają kompilator, linker, itp.
+     + chroot(8) + bind mounty + symlinki + (magia) = "spójny system"
+
+   #+BEAMER: \pause
+
+   + Narzędzia nie są w pełni funkcjonalnym systemem - trudna
+     aktualizacja
+
+   + Środowisko programisty zupełnie inne niż budowania
+
+   + Instalacja globalna (/scratchbox) - wymaga praw administratora
+
+   + 1 użytkownik = 1 środowisko budowania
+
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + Iluzja - tzw. niejawna cross-kompilacja
+
+    + System co najwyżej dostateczny. Nieoptymalny.
+
+** Alternatywy:
+
+  + Natywna kompilacja
+
+  + Android - "make world"
+
+  + Debian/Ubuntu - multiarch
+
+  + Maemo/MeeGo - scratchbox2
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+  + Natywna kompilacja - niemożliwa z przyczyn technicznych - brak
+    sprzętu lub codziennie inny sprzęt
+
+  + Android - "make world" - nie przystaje do kompilacji projektów GNU/Linuksa
+
+  + Debian/Ubuntu - multiarch - pieśń przyszłości
+
+  + Maemo/MeeGo - scratchbox2 - elastyczny i skompilikowany
+
+
+  NIEOPISANE: - emulacja wszysktkiego za pomocą qemu - niemożliwe z
+  przyczyn technicznych (kompilacja webkitta)
+
+
+
+** scratchbox 2
+
+  + Działa na zasadzie dynamicznego odwzorowywania ścieżek przy
+    dostępie (access(2), open(2), ...)
+
+
+  + Reguły w języku Lua
+  + Bazuje na mechanizmie LD PRELOAD
+  + Nie wymaga praw administratora
+
+** scratchbox 2 - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/sb2-0}
+  \end{center}
+#+END_LaTeX
+
+
+** scratchbox 2 - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/sb2-1}
+  \end{center}
+#+END_LaTeX
+
+** scratchbox 2 - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/sb2-2}
+  \end{center}
+#+END_LaTeX
+
+
+** scratchbox 2 - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/sb2-3}
+  \end{center}
+#+END_LaTeX
+
+** scratchbox2 + samsung = sbs
+
+    + sbs - SPRC/Samsung Build System
+      + Skrypt do stworzenia kompletnego środowiska (debootstrap, sb2-init, sb2)
+      + Reguły specyficzne dla SLP
+      + Przełączanie pomiędzy środowiskami
+
+    #+BEAMER: \pause
+
+    + scratchbox2
+      + Poprawki pozwalające na uruchamianie statycznych programów (qemu-native)
+
+** notes 							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+   Prawdopodobnie ciągle najlepsze rozwiązanie dla programistów na
+   systemach nie Debianowych. Na Debianie jest multiarch.
+
+** Dzisiejszy system budowania w Tizenie - OBS/gbs
+
+    + Scentralizowany system budowania wykorzystywany w openSUSE
+    + chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
+      pakiety i menedżer pakietów (instalacja z różnych architektur)
+
+
+    + Narzędzia
+      + gbs(1) - git build system
+      + osc(1) - openSUSE build service cli
+
+    #+BEAMER: \pause
+
+    + Wymaga uprawnień admistratora
+    + .deb -> .rpm
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + Instaluje system docelowy (armel), binarki odpalane przez qemu,
+      nieliczne - dostarczone prekompilowane pakiety natywne i własny
+      menedżer pakietów do instalacji pakietów z różnych architektur
+
+    Wygodny dla SCMu, dla programistów - średnio.
+
+
+* Problem 2: init(8)
+
+** Stan zastany:
+
+    + init(8) z busyboksa
+    + /etc/rc.d/rc.sysinit
+    + Skrypty serwisów - od 1 linii  ("foo &") do 1xxx
+
+    + Synchronizacja uruchamiania usług:
+
+      while [ -e /tmp/foo ]; do sleep 1; done && bar &
+
+
+    + <2-> System "zoptymalizowany" - czasem działał
+
+*** notes 							   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+    + init(8) z busyboksa - co najmniej ograniczony - nie wspiera
+    koncepcji runleveli (a takowe były wykorzystywane przy starcie
+    SLP, zrobione ręcznie).
+
+** # ps -ef (składowe systemu)
+
+    + Pojedyńcze programy realizujące interfejs użytkownika (GUI)
+
+    + <2-> Bardzo dużo usług klient/serwer (demonów) korzystających z
+      różnorakich mechanizmów IPC:
+      + Gniazda UNIX
+      + D-Bus
+      + SYSV IPC
+      + vconf (pliki + inotify(2))
+
+    + <3-> Serwisy restartujące krytyczne usługi i aplikacje:
+      + menu-daemon -> menu-screen
+
+
+** Alternatywne rozwiązania
+
+    + sysvinit+insserv (tagi LSB)
+    + upstart
+    + systemd
+      + <2-> niekompatybilny, deklaratywny(!) opis systemu
+      + <2-> uruchamianie usług na żądanie (socket activation)
+      + <2-> uproszczenie zależności usług (dzięki powyższemu)
+      + <2-> domyślne zrównoleglanie uruchamianych usług
+      + <2-> systemd --user
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    + sysvinit - kosztowny i niewiele wnosi (skrypty i tak muszą być
+      przepisane)
+
+    + upstart - bazuje na eventach, wymaga wyspecyfikowania wszystkich
+      zależności usługi. Niezarządzalne.
+
+    + systemd
+
+** systemd (konsekwencje)
+
+   #+BEAMER: \pause
+
+   Brak zmian.
+
+   #+BEAMER: \pause\vskip1cm
+
+   Dlaczego?
+   + <2-> strace
+   + <2-> systemd-analyze
+   + <2-> (systemd-)bootchart
+   + <2-> (kernel) bootgraph.pl
+
+   Symptomy:
+   + <3-> Niewykorzystane I/O, CPU
+   + <3-> Usługi uruchamiane sekwencyjnie
+
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    System działał, ale na pewno nie uruchamiał się szybciej (na co
+    liczyliśmy). Czasem działał wolniej.
+
+    + <3-> Usługi uruchamiane sekwencyjnie - co oznacznie niepoprawnie
+      opisane zależności.
+
+    + Jak ustalić poprawną kolejność?
+
+** auditd
+
+    + Podsystem audytu w Linuksie pozwala na bardzo dokładne śledzenie
+      zachowania systemu.
+
+    + <2-> IPC oznacza konieczność synchronizacji uruchamiania usług:
+      + open(2), write(2), inotify(2)
+      + connect(2), bind(2)
+
+    + <3-> Automatyczne generowanie grafów zależności (aureport + perl + dot)
+
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    Określenie Wywołań systemowych oznaczających synchronizaję (IPC)
+      + open(2), write(2), inotify(2) -
+      + connect(2), bind(2)
+
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-0}
+  \end{center}
+#+END_LaTeX
+
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-1}
+  \end{center}
+#+END_LaTeX
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-2}
+  \end{center}
+#+END_LaTeX
+
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-3}
+  \end{center}
+#+END_LaTeX
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-4}
+  \end{center}
+#+END_LaTeX
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-5}
+  \end{center}
+#+END_LaTeX
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-6}
+  \end{center}
+#+END_LaTeX
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-7}
+  \end{center}
+#+END_LaTeX
+
+** auditd - przykład
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/auditd-8}
+  \end{center}
+#+END_LaTeX
+
+** auditd
+
+    + Dodatkowo śledzenie:
+      + sync(2), f*sync(2)
+      + execve(3)
+      + ...
+
+
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
+
+    fdatasync(2) w zniszczył wydajność Firefoxa 3 (awesomebar), ale
+    nie tylko tam.
+
+
+* Problem 3: Niezawodność systemu
+
+** Stan zastany:
+
+    + Większość programów działa z prawami administratora (w tym
+      window manager)
+
+    + Zatrzymanie procesu często kończy się wymuszonym restarem
+      systemu (watchdog)
+
+    #+BEAMER: \pause
+    W konsekwencji:
+    + Niemożliwe do zrealizowania jakiekolwiek security
+
+    #+BEAMER: \pause
+    Systemy Uniksowe dostarczyły podstawowego rozwiązania zagadnienia
+    security ponad 40 lat temu - użytkownicy, grupy (tzw. DAC).
+
+
+** Zarządzanie sesją użytkownika
+
+    + Programy sesji użytkownika mają podobne wymagania jak systemowe:
+      + Zarządzanie cyklem życia (w tym automatyczny restart)
+      + Uruchamianie usług na żądanie
+      + Monitorowanie
+
+    + <2-> systemd --user
+      + Sesja graficzna (xorg-launch-helper)
+      + Sesyjny D-Bus uruchamiany na żądanie
+
+
+*** COMMENT notes 						   :B_noteNH:
+   :PROPERTIES:
+   :BEAMER_env: noteNH
+   :END:
+
+    PAM - w tym momencie staliśmy się bardziej nowocześni niż Slackware
+
+
+* COMMENT Problem 4: Bezpieczeństwo
+
+** SMACK
+
+    + DAC to za mało
+
+    + SELinux
+
+    + Pierwsze komercyjne wdrożenie systemu
+
+* Co dalej?
+
+** Quo vadis TizenOS?
+
+   + Więcej GNU/Linuksa w Tizenie (udisks, ...)
+
+   + {Xorg, ...} uruchamiany na żądanie
+
+   + Multi user, multi head, multi seat
+
+   + ...
+
+* Q&A
+** Dziękuję za uwagę
+   Karol Lewandowski <k.lewandowsk@samsung.com>
+   lmctl @freenode (#tizen)
+
