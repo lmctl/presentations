@@ -48,16 +48,13 @@ bliska.
   bezpieczeństwem systemu.''
 
 
-* Ta prezentacja nie jest o...
+* Wstęp
 
-** ... produktach
+** Wprowadzenie
 
-   "Kiedy będzie wykorzystujący Tizena:
-
-   + telefon
-   + telewizor
-   + samochód
-   + czołg(?)"
+   Cel prezentacji - przybliżenie procesu, problemów i\nbsp{}ich
+   rozwiązań związanych z budową solidnej bazy systemu operacyjnego,
+   czyli dystrybucji GNU/Linuksa.
 
 *** notes 							   :B_noteNH:
    :PROPERTIES:
@@ -75,14 +72,6 @@ bliska.
    + Video4Linux2 Multiplane
    + Contigous Memory Allocator (CMA)
 
-
-** Więc?
-
-   Budowanie solidnej bazy systemu operacyjnego, czyli dystrybucji
-   GNU/Linuksa.
-
-
-* Czym jest Tizen?
 
 ** Tizen: Dystrybucja GNU/Linuksa
 
@@ -106,7 +95,7 @@ bliska.
 
 ** Tizen: Rozszerzenia
 
-  + Messaging (SMS, MMS, Email)
+  + Messaging (SMS, MMS)
   + Audio Policy (routing)
   + PIM (Contacts, Calendar, Accounts)
   + Sensors
@@ -122,7 +111,7 @@ bliska.
    Wszystko dostępne na tizen.org.
 
 
-** Tizen: Dystrybucja oprogramowania
+** Tizen: Aplikacje i ich dystrybucja
 
   + Niestandardowy (dla GNU/Linuksa) pomysł na tworzenie i dystrybucję
     aplikacji:
@@ -130,9 +119,13 @@ bliska.
     + JavaScript (W3C APIs + specyficzne dla Tizena)
     + C++ (Bada API)
 
-  + Dystrybucja oprogramowania - "Tizen Store"
+  + Dystrybucja aplikacji - "Tizen Store"
 
-* Archeologia
+
+
+  + <2-> Dystrybucja samych komponentów systemu - pakiety .rpm
+
+* Historia
 
 ** notes							   :B_noteNH:
    :PROPERTIES:
@@ -157,8 +150,6 @@ bliska.
 #+END_LaTeX
 
 
-* Samsung Linux Platform
-
 ** Samsung Linux Platform (SLP)
 
    * System operacyjny firmy Samsung oparty na GNU/Linuksie
@@ -178,6 +169,7 @@ bliska.
 
 
    * COMMENT Samsung = firma produkująca sprzęt i systemy wbudowane (Bada)
+
 
 ** System wbudowany
 
@@ -457,21 +449,22 @@ bliska.
    Prawdopodobnie ciągle najlepsze rozwiązanie dla programistów na
    systemach nie Debianowych. Na Debianie jest multiarch.
 
-** Dzisiejszy system budowania w Tizenie - OBS/gbs
+** System budowania i zarządanie kodem
 
-    + Scentralizowany system budowania wykorzystywany w openSUSE
+    + openSUSE build service (OBS) - adresuje problemy, których nie
+      rozwiązywał sbs
+      + Zaprojektowany z myślą o wymaganiach grupy SCM
+      + Nastawiony na zarządzanie dużą ilością projektów
+      + Scentralizowany i łatwo zarządzalny (web ui)
+
+    #+BEAMER: \pause
+    Zasada działania:
     + chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
       pakiety i menedżer pakietów (instalacja z różnych architektur)
 
-
-    + Narzędzia
-      + gbs(1) - git build system
-      + osc(1) - openSUSE build service cli
-
     #+BEAMER: \pause
 
-    + Wymaga uprawnień admistratora
-    + .deb -> .rpm
+    + Gerrit do oceny jakości kodu
 
 *** notes							   :B_noteNH:
     :PROPERTIES:
@@ -511,7 +504,7 @@ bliska.
 
 ** # ps -ef (składowe systemu)
 
-    + Pojedyńcze programy realizujące interfejs użytkownika (GUI)
+    + Pojedyncze programy realizujące interfejs użytkownika (GUI)
 
     + <2-> Bardzo dużo usług klient/serwer (demonów) korzystających z
       różnorakich mechanizmów IPC:
@@ -528,11 +521,11 @@ bliska.
 
     + sysvinit+insserv (tagi LSB)
     + upstart
-    + systemd
-      + <2-> niekompatybilny, deklaratywny(!) opis systemu
-      + <2-> uruchamianie usług na żądanie (socket activation)
-      + <2-> uproszczenie zależności usług (dzięki powyższemu)
-      + <2-> domyślne zrównoleglanie uruchamianych usług
+    + systemd (v25)
+      + <2-> Deklaratywny opis systemu
+      + <2-> Uruchamianie usług na żądanie (socket activation)
+      + <2-> Uproszczenie zależności usług (dzięki powyższemu)
+      + <2-> Domyślne zrównoleglanie uruchamianych usług
       + <2-> systemd --user
 
 *** notes							   :B_noteNH:
@@ -548,23 +541,26 @@ bliska.
 
     + systemd
 
-** systemd (konsekwencje)
+** Wdrożenie systemd
+
+   Konsekwencje wdrożenia systemd:
 
    #+BEAMER: \pause
 
-   Brak zmian.
+   + Brak zmian
 
-   #+BEAMER: \pause\vskip1cm
+   #+BEAMER: \pause
 
-   Dlaczego?
-   + <2-> strace
-   + <2-> systemd-analyze
-   + <2-> (systemd-)bootchart
-   + <2-> (kernel) bootgraph.pl
+   Analiza działania systemu za pomocą narzędzi:
+   + strace
+   + systemd-analyze
+   + bootgraph.pl (kernel)
+   + (systemd-)bootchart
 
-   Symptomy:
-   + <3-> Niewykorzystane I/O, CPU
-   + <3-> Usługi uruchamiane sekwencyjnie
+   #+BEAMER: \pause
+   Sympromy problemów:
+   + Niewykorzystane I/O, CPU
+   + Usługi uruchamiane sekwencyjnie
 
 
 *** notes							   :B_noteNH:
@@ -580,17 +576,17 @@ bliska.
 
     + Jak ustalić poprawną kolejność?
 
-** auditd
+** Zbieranie dokładnych informacji - auditd
 
     + Podsystem audytu w Linuksie pozwala na bardzo dokładne śledzenie
       zachowania systemu.
 
     + <2-> IPC oznacza konieczność synchronizacji uruchamiania usług:
-      + open(2), write(2), inotify(2)
-      + connect(2), bind(2)
+      + Dostęp do plików/konfiguracji - open(2), write(2), inotify(2)
+      + Usługi klient/serwer - connect(2), bind(2)
 
-    + <3-> Automatyczne generowanie grafów zależności (aureport + perl + dot)
-
+    + <3-> Automatyczne generowanie grafów zależności (aureport +
+      perl + graphwiz/dot)
 
 *** notes							   :B_noteNH:
     :PROPERTIES:
@@ -676,6 +672,13 @@ bliska.
       + ...
 
 
+** init(8) dziś i jutro
+
+    + systemd v204 + natywna konfiguracja
+
+    + Wiele serwisów uruchamianych na żądanie, wiele rozważanych (Xorg)
+
+
 *** notes							   :B_noteNH:
     :PROPERTIES:
     :BEAMER_env: noteNH
@@ -724,30 +727,52 @@ bliska.
     PAM - w tym momencie staliśmy się bardziej nowocześni niż Slackware
 
 
-* COMMENT Problem 4: Bezpieczeństwo
+** Niezawodność dziś i jutro
 
-** SMACK
+    + Usługi nieuprzywilejowane w osobnej sesji
 
-    + DAC to za mało
+    + SMACK do drobnoziarnistej kontroli dostępu
 
-    + SELinux
-
-    + Pierwsze komercyjne wdrożenie systemu
-
-* Co dalej?
+* Dalsze kroki
 
 ** Quo vadis TizenOS?
 
-   + Więcej GNU/Linuksa w Tizenie (udisks, ...)
+   + Więcej GNU/Linuksa w Tizenie
 
-   + {Xorg, ...} uruchamiany na żądanie
+   #+BEAMER: \pause
 
-   + Multi user, multi head, multi seat
-
-   + ...
+   + Stworzenie nowej dystrybucji GNU/Linuksa
+   + Naprawienie błędów
+   + ???
+   + PROFIT!!!
 
 * Q&A
+
+** Pytania i odpowiedzi
+
+   Autor niniejszej prezentacji nie posiada informacji czy i\nbsp{}kiedy będzie
+   wydany wykorzystujący Tizena:
+
+   + telefon
+   + telewizor
+   + samochód
+   + czołg(?)
+
+   :)
+
+
 ** Dziękuję za uwagę
    Karol Lewandowski <k.lewandowsk@samsung.com>
    lmctl @freenode (#tizen)
+
+
+** Linki
+
+   + sbs: \url{https://review.tizen.org/git/?p=tools/sbs.git;a=summary}
+
+   + Gerrit:  \url{http://review.tizen.org/gerrit}
+
+   + Grafy auditd: \url{https://wiki.tizen.org/wiki/System/Dependency_graphs}
+
+   + Lista dyskuksyjna: \url{https://lists.tizen.org/pipermail/dev/}
 

@@ -1,4 +1,4 @@
-% Created 2013-10-10 Thu 14:52
+% Created 2013-10-10 Thu 21:44
 \documentclass[presentation,aspectratio=43,12pt]{beamer}
 \usepackage{fontspec}
 \usepackage{fixltx2e}
@@ -38,18 +38,13 @@
 
 
 
-\section{Ta prezentacja nie jest o\ldots{}}
+\section{Wstęp}
 \label{sec-1}
 
-\begin{frame}[label=sec-1-1]{\ldots{} produktach}
-"Kiedy będzie wykorzystujący Tizena:
-
-\begin{itemize}
-\item telefon
-\item telewizor
-\item samochód
-\item czołg(?)"
-\end{itemize}
+\begin{frame}[label=sec-1-1]{Wprowadzenie}
+Cel prezentacji - przybliżenie procesu, problemów i~ich
+rozwiązań związanych z budową solidnej bazy systemu operacyjnego,
+czyli dystrybucji GNU/Linuksa.
 
 \note{Płytki uruchomieniowe i deweloperskie (ale nie produkty):
 
@@ -67,15 +62,7 @@ Kernelu - temat na \emph{cykl} prezentacji
 \end{itemize}}
 \end{frame}
 
-\begin{frame}[label=sec-1-2]{Więc?}
-Budowanie solidnej bazy systemu operacyjnego, czyli dystrybucji
-GNU/Linuksa.
-\end{frame}
-
-\section{Czym jest Tizen?}
-\label{sec-2}
-
-\begin{frame}[label=sec-2-1]{Tizen: Dystrybucja GNU/Linuksa}
+\begin{frame}[label=sec-1-2]{Tizen: Dystrybucja GNU/Linuksa}
 \begin{itemize}
 \item Dystrybucja GNU/Linuksa ze standardowymi komponentami:
 \begin{itemize}
@@ -95,9 +82,9 @@ GNU/Linuksa.
 
 \note{Co budujemy?}
 \end{frame}
-\begin{frame}[label=sec-2-2]{Tizen: Rozszerzenia}
+\begin{frame}[label=sec-1-3]{Tizen: Rozszerzenia}
 \begin{itemize}
-\item Messaging (SMS, MMS, Email)
+\item Messaging (SMS, MMS)
 \item Audio Policy (routing)
 \item PIM (Contacts, Calendar, Accounts)
 \item Sensors
@@ -109,7 +96,7 @@ GNU/Linuksa.
 \note{Wszystko dostępne na tizen.org.}
 \end{frame}
 
-\begin{frame}[label=sec-2-3]{Tizen: Dystrybucja oprogramowania}
+\begin{frame}[label=sec-1-4]{Tizen: Aplikacje i ich dystrybucja}
 \begin{itemize}
 \item Niestandardowy (dla GNU/Linuksa) pomysł na tworzenie i dystrybucję
 aplikacji:
@@ -119,15 +106,21 @@ aplikacji:
 \item C++ (Bada API)
 \end{itemize}
 
-\item Dystrybucja oprogramowania - "Tizen Store"
+\item Dystrybucja aplikacji - "Tizen Store"
+\end{itemize}
+
+
+
+\begin{itemize}
+\item <2-> Dystrybucja samych komponentów systemu - pakiety .rpm
 \end{itemize}
 \end{frame}
-\section{Archeologia}
-\label{sec-3}
+\section{Historia}
+\label{sec-2}
 
 \note{Trzy słowa o historii - czyli skąd przychodzimy i dokąd zmierzamy.}
 
-\begin{frame}[label=sec-3-2]{Historia \tiny(\url{https://github.com/kumadasu/tizen-history})}
+\begin{frame}[label=sec-2-2]{Historia \tiny(\url{https://github.com/kumadasu/tizen-history})}
 \begin{center}
 \begin{tikzpicture}[x=1pt,y=1pt]
 \fill<2->[fill=pantone2985]( 112.3pt,   6pt) ellipse (12.5pt and 6.26pt); % SLP
@@ -140,10 +133,7 @@ aplikacji:
 \end{center}
 \end{frame}
 
-\section{Samsung Linux Platform}
-\label{sec-4}
-
-\begin{frame}[label=sec-4-1]{Samsung Linux Platform (SLP)}
+\begin{frame}[label=sec-2-3]{Samsung Linux Platform (SLP)}
 \begin{itemize}
 \item System operacyjny firmy Samsung oparty na GNU/Linuksie
 
@@ -161,7 +151,8 @@ zarządzania pamięcią - MMU).
 \item COMMENT Samsung = firma produkująca sprzęt i systemy wbudowane (Bada)
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-4-2]{System wbudowany}
+
+\begin{frame}[label=sec-2-4]{System wbudowany}
 Cechy systemu wbudowanego:
 
 \begin{itemize}
@@ -180,7 +171,7 @@ Cechy systemu wbudowanego:
 Reżim czasowy - quick fix and dirty hack}
 \end{frame}
 
-\begin{frame}[label=sec-4-3]{System wbudowany (konsekwencje)}
+\begin{frame}[label=sec-2-5]{System wbudowany (konsekwencje)}
 \begin{itemize}
 \item "Optymalizowany" pod konkretny sprzęt (sleep~42)
 
@@ -215,7 +206,7 @@ wymagane funkcjonalności zamiast tylko być)
 \end{frame}
 
 
-\begin{frame}[label=sec-4-4]{SLP(2) circa 2010}
+\begin{frame}[label=sec-2-6]{SLP(2) circa 2010}
 \begin{itemize}
 \item scratchbox(1) do kompilacji skrośnej
 \item init(8) z busyboksa
@@ -234,7 +225,7 @@ wymagane funkcjonalności zamiast tylko być)
 
 
 
-\begin{frame}[label=sec-4-5]{Aspiracje (potencjalne zastosowania) SLP}
+\begin{frame}[label=sec-2-7]{Aspiracje (potencjalne zastosowania) SLP}
 \begin{itemize}
 \item System operacyjny dedykowany na specjalizowane systemy:
 \begin{itemize}
@@ -256,9 +247,9 @@ problem po problemie.}
 \end{frame}
 
 \section{Problem 1: Budowa oprogramowania}
-\label{sec-5}
+\label{sec-3}
 
-\begin{frame}[label=sec-5-1]{Cechy pożądanego środowiska budowania:}
+\begin{frame}[label=sec-3-1]{Cechy pożądanego środowiska budowania:}
 \begin{itemize}
 \item Wygodna kompilacja skrośna istniejących projektów GNU/Linux (x86
 -> ARM, amd64 -> x86)
@@ -286,7 +277,7 @@ budowania pakietów FLOSS.
 \end{itemize}}
 \end{frame}
 
-\begin{frame}[label=sec-5-2]{Wykorzystywane: scratchbox(1)}
+\begin{frame}[label=sec-3-2]{Wykorzystywane: scratchbox(1)}
 \begin{itemize}
 \item Bazuje na zmodyfikowanym środowisku, by stworzyć iluzję systemu
 docelowego:
@@ -318,7 +309,7 @@ aktualizacja
 \item System co najwyżej dostateczny. Nieoptymalny.
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-5-3]{Alternatywy:}
+\begin{frame}[label=sec-3-3]{Alternatywy:}
 \begin{itemize}
 \item Natywna kompilacja
 
@@ -346,7 +337,7 @@ przyczyn technicznych (kompilacja webkitta)}
 \end{frame}
 
 
-\begin{frame}[label=sec-5-4]{scratchbox 2}
+\begin{frame}[label=sec-3-4]{scratchbox 2}
 \begin{itemize}
 \item Działa na zasadzie dynamicznego odwzorowywania ścieżek przy
 dostępie (access(2), open(2), \ldots{})
@@ -359,29 +350,29 @@ dostępie (access(2), open(2), \ldots{})
 \item Nie wymaga praw administratora
 \end{itemize}
 \end{frame}
-\begin{frame}[label=sec-5-5]{scratchbox 2 - przykład}
+\begin{frame}[label=sec-3-5]{scratchbox 2 - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/sb2-0}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-5-6]{scratchbox 2 - przykład}
+\begin{frame}[label=sec-3-6]{scratchbox 2 - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/sb2-1}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-5-7]{scratchbox 2 - przykład}
+\begin{frame}[label=sec-3-7]{scratchbox 2 - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/sb2-2}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-5-8]{scratchbox 2 - przykład}
+\begin{frame}[label=sec-3-8]{scratchbox 2 - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/sb2-3}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-5-9]{scratchbox2 + samsung = sbs}
+\begin{frame}[label=sec-3-9]{scratchbox2 + samsung = sbs}
 \begin{itemize}
 \item sbs - SPRC/Samsung Build System
 \begin{itemize}
@@ -402,27 +393,28 @@ dostępie (access(2), open(2), \ldots{})
 \end{frame}
 \note{Prawdopodobnie ciągle najlepsze rozwiązanie dla programistów na
 systemach nie Debianowych. Na Debianie jest multiarch.}
-\begin{frame}[label=sec-5-11]{Dzisiejszy system budowania w Tizenie - OBS/gbs}
+\begin{frame}[label=sec-3-11]{System budowania i zarządanie kodem}
 \begin{itemize}
-\item Scentralizowany system budowania wykorzystywany w openSUSE
+\item openSUSE build service (OBS) - adresuje problemy, których nie
+rozwiązywał sbs
+\begin{itemize}
+\item Zaprojektowany z myślą o wymaganiach grupy SCM
+\item Nastawiony na zarządzanie dużą ilością projektów
+\item Scentralizowany i łatwo zarządzalny (web ui)
+\end{itemize}
+\end{itemize}
+
+\pause
+Zasada działania:
+\begin{itemize}
 \item chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
 pakiety i menedżer pakietów (instalacja z różnych architektur)
-\end{itemize}
-
-
-\begin{itemize}
-\item Narzędzia
-\begin{itemize}
-\item gbs(1) - git build system
-\item osc(1) - openSUSE build service cli
-\end{itemize}
 \end{itemize}
 
 \pause
 
 \begin{itemize}
-\item Wymaga uprawnień admistratora
-\item .deb -> .rpm
+\item Gerrit do oceny jakości kodu
 \end{itemize}
 
 \note{\begin{itemize}
@@ -435,9 +427,9 @@ Wygodny dla SCMu, dla programistów - średnio.}
 \end{frame}
 
 \section{Problem 2: init(8)}
-\label{sec-6}
+\label{sec-4}
 
-\begin{frame}[label=sec-6-1]{Stan zastany:}
+\begin{frame}[label=sec-4-1]{Stan zastany:}
 \begin{itemize}
 \item init(8) z busyboksa
 \item /etc/rc.d/rc.sysinit
@@ -459,9 +451,9 @@ while [ -e /tmp/foo ]; do sleep 1; done \&\& bar \&
 koncepcji runleveli (a takowe były wykorzystywane przy starcie
 SLP, zrobione ręcznie).}
 \end{frame}
-\begin{frame}[label=sec-6-2]{\# ps -ef (składowe systemu)}
+\begin{frame}[label=sec-4-2]{\# ps -ef (składowe systemu)}
 \begin{itemize}
-\item Pojedyńcze programy realizujące interfejs użytkownika (GUI)
+\item Pojedyncze programy realizujące interfejs użytkownika (GUI)
 
 \item <2-> Bardzo dużo usług klient/serwer (demonów) korzystających z
 różnorakich mechanizmów IPC:
@@ -479,16 +471,16 @@ różnorakich mechanizmów IPC:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label=sec-6-3]{Alternatywne rozwiązania}
+\begin{frame}[label=sec-4-3]{Alternatywne rozwiązania}
 \begin{itemize}
 \item sysvinit+insserv (tagi LSB)
 \item upstart
-\item systemd
+\item systemd (v25)
 \begin{itemize}
-\item <2-> niekompatybilny, deklaratywny(!) opis systemu
-\item <2-> uruchamianie usług na żądanie (socket activation)
-\item <2-> uproszczenie zależności usług (dzięki powyższemu)
-\item <2-> domyślne zrównoleglanie uruchamianych usług
+\item <2-> Deklaratywny opis systemu
+\item <2-> Uruchamianie usług na żądanie (socket activation)
+\item <2-> Uproszczenie zależności usług (dzięki powyższemu)
+\item <2-> Domyślne zrównoleglanie uruchamianych usług
 \item <2-> systemd --user
 \end{itemize}
 \end{itemize}
@@ -503,25 +495,30 @@ zależności usługi. Niezarządzalne.
 \item systemd
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-6-4]{systemd (konsekwencje)}
+\begin{frame}[label=sec-4-4]{Wdrożenie systemd}
+Konsekwencje wdrożenia systemd:
+
 \pause
 
-Brak zmian.
-
-\pause\vskip1cm
-
-Dlaczego?
 \begin{itemize}
-\item <2-> strace
-\item <2-> systemd-analyze
-\item <2-> (systemd-)bootchart
-\item <2-> (kernel) bootgraph.pl
+\item Brak zmian
 \end{itemize}
 
-Symptomy:
+\pause
+
+Analiza działania systemu za pomocą narzędzi:
 \begin{itemize}
-\item <3-> Niewykorzystane I/O, CPU
-\item <3-> Usługi uruchamiane sekwencyjnie
+\item strace
+\item systemd-analyze
+\item bootgraph.pl (kernel)
+\item (systemd-)bootchart
+\end{itemize}
+
+\pause
+Sympromy problemów:
+\begin{itemize}
+\item Niewykorzystane I/O, CPU
+\item Usługi uruchamiane sekwencyjnie
 \end{itemize}
 
 
@@ -535,20 +532,20 @@ opisane zależności.
 \item Jak ustalić poprawną kolejność?
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-6-5]{auditd}
+\begin{frame}[label=sec-4-5]{Zbieranie dokładnych informacji - auditd}
 \begin{itemize}
 \item Podsystem audytu w Linuksie pozwala na bardzo dokładne śledzenie
 zachowania systemu.
 
 \item <2-> IPC oznacza konieczność synchronizacji uruchamiania usług:
 \begin{itemize}
-\item open(2), write(2), inotify(2)
-\item connect(2), bind(2)
+\item Dostęp do plików/konfiguracji - open(2), write(2), inotify(2)
+\item Usługi klient/serwer - connect(2), bind(2)
 \end{itemize}
 
-\item <3-> Automatyczne generowanie grafów zależności (aureport + perl + dot)
+\item <3-> Automatyczne generowanie grafów zależności (aureport +
+perl + graphwiz/dot)
 \end{itemize}
-
 
 \note{Określenie Wywołań systemowych oznaczających synchronizaję (IPC)
 \begin{itemize}
@@ -556,57 +553,57 @@ zachowania systemu.
 \item connect(2), bind(2)
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-6-6]{auditd - przykład}
+\begin{frame}[label=sec-4-6]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-0}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-6-7]{auditd - przykład}
+\begin{frame}[label=sec-4-7]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-1}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-6-8]{auditd - przykład}
+\begin{frame}[label=sec-4-8]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-2}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-6-9]{auditd - przykład}
+\begin{frame}[label=sec-4-9]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-3}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-6-10]{auditd - przykład}
+\begin{frame}[label=sec-4-10]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-4}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-6-11]{auditd - przykład}
+\begin{frame}[label=sec-4-11]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-5}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-6-12]{auditd - przykład}
+\begin{frame}[label=sec-4-12]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-6}
 \end{center}
 \end{frame}
 
-\begin{frame}[label=sec-6-13]{auditd - przykład}
+\begin{frame}[label=sec-4-13]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-7}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-6-14]{auditd - przykład}
+\begin{frame}[label=sec-4-14]{auditd - przykład}
 \begin{center}
 \includegraphics[width=\textwidth]{images/auditd-8}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-6-15]{auditd}
+\begin{frame}[label=sec-4-15]{auditd}
 \begin{itemize}
 \item Dodatkowo śledzenie:
 \begin{itemize}
@@ -615,6 +612,14 @@ zachowania systemu.
 \item \ldots{}
 \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}[label=sec-4-16]{init(8) dziś i jutro}
+\begin{itemize}
+\item systemd v204 + natywna konfiguracja
+
+\item Wiele serwisów uruchamianych na żądanie, wiele rozważanych (Xorg)
+\end{itemize}
 
 
 \note{fdatasync(2) w zniszczył wydajność Firefoxa 3 (awesomebar), ale
@@ -622,9 +627,9 @@ nie tylko tam.}
 \end{frame}
 
 \section{Problem 3: Niezawodność systemu}
-\label{sec-7}
+\label{sec-5}
 
-\begin{frame}[label=sec-7-1]{Stan zastany:}
+\begin{frame}[label=sec-5-1]{Stan zastany:}
 \begin{itemize}
 \item Większość programów działa z prawami administratora (w tym
 window manager)
@@ -644,7 +649,7 @@ Systemy Uniksowe dostarczyły podstawowego rozwiązania zagadnienia
 security ponad 40 lat temu - użytkownicy, grupy (tzw. DAC).
 \end{frame}
 
-\begin{frame}[label=sec-7-2]{Zarządzanie sesją użytkownika}
+\begin{frame}[label=sec-5-2]{Zarządzanie sesją użytkownika}
 \begin{itemize}
 \item Programy sesji użytkownika mają podobne wymagania jak systemowe:
 \begin{itemize}
@@ -661,25 +666,62 @@ security ponad 40 lat temu - użytkownicy, grupy (tzw. DAC).
 \end{itemize}
 \end{frame}
 
-\section{Co dalej?}
-\label{sec-8}
-
-\begin{frame}[label=sec-8-1]{Quo vadis TizenOS?}
+\begin{frame}[label=sec-5-3]{Niezawodność dziś i jutro}
 \begin{itemize}
-\item Więcej GNU/Linuksa w Tizenie (udisks, \ldots{})
+\item Usługi nieuprzywilejowane w osobnej sesji
 
-\item \{Xorg, \ldots{}\} uruchamiany na żądanie
+\item SMACK do drobnoziarnistej kontroli dostępu
+\end{itemize}
+\end{frame}
+\section{Dalsze kroki}
+\label{sec-6}
 
-\item Multi user, multi head, multi seat
+\begin{frame}[label=sec-6-1]{Quo vadis TizenOS?}
+\begin{itemize}
+\item Więcej GNU/Linuksa w Tizenie
+\end{itemize}
 
-\item \ldots{}
+\pause
+
+\begin{itemize}
+\item Stworzenie nowej dystrybucji GNU/Linuksa
+\item Naprawienie błędów
+\item ???
+\item PROFIT!!!
 \end{itemize}
 \end{frame}
 \section{Q\&A}
-\label{sec-9}
-\begin{frame}[label=sec-9-1]{Dziękuję za uwagę}
+\label{sec-7}
+
+\begin{frame}[label=sec-7-1]{Pytania i odpowiedzi}
+Autor niniejszej prezentacji nie posiada informacji czy i~kiedy będzie
+wydany wykorzystujący Tizena:
+
+\begin{itemize}
+\item telefon
+\item telewizor
+\item samochód
+\item czołg(?)
+\end{itemize}
+
+:)
+\end{frame}
+
+\begin{frame}[label=sec-7-2]{Dziękuję za uwagę}
 Karol Lewandowski <k.lewandowsk@samsung.com>
 lmctl @freenode (\#tizen)
+\end{frame}
+
+\begin{frame}[label=sec-7-3]{Linki}
+\begin{itemize}
+\item sbs: \url{https://review.tizen.org/git/?p=tools/sbs.git;a=summary}
+
+\item Gerrit:  \url{http://review.tizen.org/gerrit}
+
+\item Grafy auditd: \url{https://wiki.tizen.org/wiki/System/Dependency_graphs}
+
+\item Lista dyskuksyjna: \url{https://lists.tizen.org/pipermail/dev/}
+\end{itemize}
 \end{frame}
 % Emacs 23.4.1 (Org mode 8.0.7)
 \end{document}
