@@ -1,4 +1,4 @@
-% Created 2013-10-10 Thu 21:44
+% Created 2013-10-10 Thu 21:55
 \documentclass[presentation,aspectratio=43,12pt]{beamer}
 \usepackage{fontspec}
 \usepackage{fixltx2e}
@@ -402,25 +402,17 @@ rozwiązywał sbs
 \item Nastawiony na zarządzanie dużą ilością projektów
 \item Scentralizowany i łatwo zarządzalny (web ui)
 \end{itemize}
-\end{itemize}
 
-\pause
-Zasada działania:
-\begin{itemize}
-\item chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
-pakiety i menedżer pakietów (instalacja z różnych architektur)
-\end{itemize}
-
-\pause
-
-\begin{itemize}
-\item Gerrit do oceny jakości kodu
+\item <2-> Gerrit do oceny jakości kodu
 \end{itemize}
 
 \note{\begin{itemize}
 \item Instaluje system docelowy (armel), binarki odpalane przez qemu,
 nieliczne - dostarczone prekompilowane pakiety natywne i własny
 menedżer pakietów do instalacji pakietów z różnych architektur
+
+\item chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
+pakiety i menedżer pakietów (instalacja z różnych architektur)
 \end{itemize}
 
 Wygodny dla SCMu, dla programistów - średnio.}

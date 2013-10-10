@@ -457,14 +457,7 @@ bliska.
       + Nastawiony na zarządzanie dużą ilością projektów
       + Scentralizowany i łatwo zarządzalny (web ui)
 
-    #+BEAMER: \pause
-    Zasada działania:
-    + chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
-      pakiety i menedżer pakietów (instalacja z różnych architektur)
-
-    #+BEAMER: \pause
-
-    + Gerrit do oceny jakości kodu
+    + <2-> Gerrit do oceny jakości kodu
 
 *** notes							   :B_noteNH:
     :PROPERTIES:
@@ -474,6 +467,9 @@ bliska.
     + Instaluje system docelowy (armel), binarki odpalane przez qemu,
       nieliczne - dostarczone prekompilowane pakiety natywne i własny
       menedżer pakietów do instalacji pakietów z różnych architektur
+
+    + chroot(8), system docelowy + qemu-static-ARCH, zmodyfikowane
+      pakiety i menedżer pakietów (instalacja z różnych architektur)
 
     Wygodny dla SCMu, dla programistów - średnio.
 
