@@ -52,7 +52,7 @@ bliska.
 
 ** Wprowadzenie
 
-   Cel prezentacji - przybliżenie procesu, problemów i\nbsp{}ich
+   Celem prezentacji jest przybliżenie procesów, problemów i\nbsp{}ich
    rozwiązań związanych z budową solidnej bazy systemu operacyjnego,
    czyli dystrybucji GNU/Linuksa.
 
@@ -196,17 +196,14 @@ bliska.
 
 ** System wbudowany (konsekwencje)
 
-   + "Optymalizowany" pod konkretny sprzęt (sleep\nbsp{}42)
+   + "Optymalizowany" pod konkretny sprzęt
 
-   + <2-> Kontrola dostępu nie zawsze traktowana z\nbsp{}należytą uwagą
-     (/dev/exynos-mem)
+   + <2-> Kontrola dostępu nie zawsze traktowana z\nbsp{}należytą
+     uwagą (/dev/exynos-mem)
 
-   + <3-> System bardzo okrojony (braki narzędzi lub dostępne ich
-     zubożone wersje)
+   + <3-> System bardzo okrojony
 
-   + <4-> Mnogość rozwiązań tymczasowych (pliki binarne w
-     repozytorium)
-
+   + <4-> Mnogość rozwiązań tymczasowych
 
 *** notes 							   :B_noteNH:
     :PROPERTIES:
@@ -232,12 +229,10 @@ bliska.
 ** SLP(2) circa 2010
 
    + scratchbox(1) do kompilacji skrośnej
-   + init(8) z busyboksa
-   + Większość procesów działa z uprawnieniami roota
-   + Pakiety .deb do dystrybucji oprogramowania
-
-
-   + W oryginalnym zamyśle "projektowany" na urządzenia smartphone
+   + <2-> init(8) z busyboksa
+   + <3-> Procesy działają z uprawnieniami roota
+   + <4-> Pakiety .deb do dystrybucji oprogramowania
+   + <5-> Oryginalnie "projektowany" typu smartphone
 
 *** notes 							   :B_noteNH:
     :PROPERTIES:
@@ -297,20 +292,57 @@ bliska.
 
 * Problem 1: Budowa oprogramowania
 
-** Cechy pożądanego środowiska budowania:
+** Wykorzystywane: scratchbox(1)
 
-   + Wygodna kompilacja skrośna istniejących projektów GNU/Linux (x86
-     -> ARM, amd64 -> x86)
+   scratchbox - niejawna kompilacja skrośna przez połączenie dwóch systemów:
 
-   + Środowisko przeźroczyste dla programistów i\nbsp{}wygodne w utrzymaniu
+     + System docelowy dostarcza bibliotek
+     + Narzędzia dostarczają kompilator, linker
+     + chroot(8) + bind mounty + symlinki + (magia) = "spójny system"
 
-   + Powtarzalne wyniki budowania (niezależne od środowiska
-     programisty)
+#+BEAMER: \pause
+   Wady:
+     + Bardzo czasochłonny w utrzymaniu
+
+     + Instalacja globalna /scratchbox
+
+     + Środowisko programisty inne niż budowania
+
+     + 1 użytkownik = 1 środowisko budowania
 
 
-   + <2-> Niezależne środowiska dla różnych projektów, architektur sprzętowych, ...
+*** notes							   :B_noteNH:
+    :PROPERTIES:
+    :BEAMER_env: noteNH
+    :END:
 
-   + <2-> W pełni funcjonalny system nie wymagający praw administratora
+   + Narzędzia nie są w pełni funkcjonalnym systemem - trudna
+     aktualizacja
+
+   + Środowisko programisty zupełnie inne niż budowania
+
+   + Instalacja globalna (/scratchbox) - wymaga praw administratora
+
+   + 1 użytkownik = 1 środowisko budowania
+
+
+
+
+    + Iluzja - tzw. niejawna cross-kompilacja
+
+    + System co najwyżej dostateczny. Nieoptymalny.
+
+** Pożądane cechy środowiska budowania
+
+   + Kompilacja skrośna istniejących projektów\nbsp{}GNU
+
+   + Środowisko przeźroczyste dla programistów
+
+   + Powtarzalne wyniki budowania
+
+   + <2-> 1 użytkownik = n projektów = n środowisk
+
+   + <2-> Środowisko nie wymagające praw administratora
 
 *** notes							   :B_noteNH:
     :PROPERTIES:
@@ -324,38 +356,20 @@ bliska.
 
     + Wygodne - przeźroczyste.
 
+   + Wygodna kompilacja skrośna istniejących projektów GNU/Linux (x86
+     -> ARM, amd64 -> x86)
 
-** Wykorzystywane: scratchbox(1)
+   + Środowisko przeźroczyste dla programistów i\nbsp{}wygodne w utrzymaniu
 
-   + Bazuje na zmodyfikowanym środowisku, by stworzyć iluzję systemu
-     docelowego:
+   + Powtarzalne wyniki budowania (niezależne od środowiska
+     programisty)
 
-     + System docelowy (target) dostarcza biblioteki
-     + Narzędzia (tools) dostarczają kompilator, linker, itp.
-     + chroot(8) + bind mounty + symlinki + (magia) = "spójny system"
+   + <2-> Niezależne środowiska dla różnych projektów, architektur sprzętowych, ...
 
-   #+BEAMER: \pause
-
-   + Narzędzia nie są w pełni funkcjonalnym systemem - trudna
-     aktualizacja
-
-   + Środowisko programisty zupełnie inne niż budowania
-
-   + Instalacja globalna (/scratchbox) - wymaga praw administratora
-
-   + 1 użytkownik = 1 środowisko budowania
+   + <2-> W pełni funcjonalny system nie wymagający praw administratora
 
 
-*** notes							   :B_noteNH:
-    :PROPERTIES:
-    :BEAMER_env: noteNH
-    :END:
-
-    + Iluzja - tzw. niejawna cross-kompilacja
-
-    + System co najwyżej dostateczny. Nieoptymalny.
-
-** Alternatywy:
+** Alternatywy
 
   + Natywna kompilacja
 
@@ -363,7 +377,7 @@ bliska.
 
   + Debian/Ubuntu - multiarch
 
-  + Maemo/MeeGo - scratchbox2
+  + Maemo/MeeGo - scratchbox 2
 
 *** notes							   :B_noteNH:
     :PROPERTIES:
@@ -384,18 +398,22 @@ bliska.
   przyczyn technicznych (kompilacja webkitta)
 
 
+** scratchbox 2 + samsung
 
-** scratchbox 2
-
-  + Działa na zasadzie dynamicznego odwzorowywania ścieżek przy
-    dostępie (access(2), open(2), ...)
-
-
+  scratchbox 2:
+  + Biblioteka zmieniająca odwzorowanie ścieżek przy próbie dostępu
+    (LD PRELOAD)
   + Reguły w języku Lua
-  + Bazuje na mechanizmie LD PRELOAD
   + Nie wymaga praw administratora
+  + Skomplikowana konfiguracja
 
-** scratchbox 2 - przykład
+  #+BEAMER: \pause\vskip0.5cm
+
+  sbs - SLP/Samsung Build System
+  + Skrypt do stworzenia kompletnego środowiska (debootstrap + sb2-init + sb2)
+  + Reguły specyficzne dla SLP
+
+** scratchbox 2 + sbs (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -403,8 +421,7 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-
-** scratchbox 2 - przykład
+** scratchbox 2 + sbs (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -412,7 +429,7 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-** scratchbox 2 - przykład
+** scratchbox 2 + sbs (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -420,8 +437,7 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-
-** scratchbox 2 - przykład
+** scratchbox 2 + sbs (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -429,19 +445,7 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-** scratchbox2 + samsung = sbs
-
-    + sbs - SPRC/Samsung Build System
-      + Skrypt do stworzenia kompletnego środowiska (debootstrap, sb2-init, sb2)
-      + Reguły specyficzne dla SLP
-      + Przełączanie pomiędzy środowiskami
-
-    #+BEAMER: \pause
-
-    + scratchbox2
-      + Poprawki pozwalające na uruchamianie statycznych programów (qemu-native)
-
-** notes 							   :B_noteNH:
+*** notes 							   :B_noteNH:
    :PROPERTIES:
    :BEAMER_env: noteNH
    :END:
@@ -449,7 +453,7 @@ bliska.
    Prawdopodobnie ciągle najlepsze rozwiązanie dla programistów na
    systemach nie Debianowych. Na Debianie jest multiarch.
 
-** System budowania i zarządanie kodem
+** System budowania dziś
 
     + openSUSE build service (OBS) - adresuje problemy, których nie
       rozwiązywał sbs
@@ -476,7 +480,7 @@ bliska.
 
 * Problem 2: init(8)
 
-** Stan zastany:
+** Stan zastany
 
     + init(8) z busyboksa
     + /etc/rc.d/rc.sysinit
@@ -554,7 +558,7 @@ bliska.
    + (systemd-)bootchart
 
    #+BEAMER: \pause
-   Sympromy problemów:
+   Symptomy problemów:
    + Niewykorzystane I/O, CPU
    + Usługi uruchamiane sekwencyjnie
 
@@ -593,7 +597,7 @@ bliska.
       + open(2), write(2), inotify(2) -
       + connect(2), bind(2)
 
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -601,14 +605,14 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
   \includegraphics[width=\textwidth]{images/auditd-1}
   \end{center}
 #+END_LaTeX
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -616,35 +620,35 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
   \includegraphics[width=\textwidth]{images/auditd-3}
   \end{center}
 #+END_LaTeX
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
   \includegraphics[width=\textwidth]{images/auditd-4}
   \end{center}
 #+END_LaTeX
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
   \includegraphics[width=\textwidth]{images/auditd-5}
   \end{center}
 #+END_LaTeX
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
   \includegraphics[width=\textwidth]{images/auditd-6}
   \end{center}
 #+END_LaTeX
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -652,7 +656,7 @@ bliska.
   \end{center}
 #+END_LaTeX
 
-** auditd - przykład
+** auditd + dot (przykład)
 
 #+BEGIN_LaTeX
   \begin{center}
@@ -686,7 +690,7 @@ bliska.
 
 * Problem 3: Niezawodność systemu
 
-** Stan zastany:
+** Stan zastany
 
     + Większość programów działa z prawami administratora (w tym
       window manager)
@@ -734,13 +738,8 @@ bliska.
 ** Quo vadis TizenOS?
 
    + Więcej GNU/Linuksa w Tizenie
+   + <2-> Więcej Tizena w GNU/Linuksie
 
-   #+BEAMER: \pause
-
-   + Stworzenie nowej dystrybucji GNU/Linuksa
-   + Naprawienie błędów
-   + ???
-   + PROFIT!!!
 
 * Q&A
 
@@ -758,13 +757,15 @@ bliska.
 
 
 ** Dziękuję za uwagę
+
    Karol Lewandowski <k.lewandowsk@samsung.com>
+
    lmctl @freenode (#tizen)
 
 
 ** Linki
 
-   + sbs: \url{https://review.tizen.org/git/?p=tools/sbs.git;a=summary}
+   + sbs (wartość historyczna): \url{https://review.tizen.org/git/?p=tools/sbs.git;a=summary}
 
    + Gerrit:  \url{http://review.tizen.org/gerrit}
 
