@@ -418,49 +418,14 @@ bliska.
 
 #+BEGIN_LaTeX
   \begin{center}
-  \includegraphics[width=\textwidth]{images/sb2-m1}
+  \includegraphics<1>[width=\textwidth]{images/sb2-m1}
+  \includegraphics<2>[width=\textwidth]{images/sb2-0}
+  \includegraphics<3>[width=\textwidth]{images/sb2-1}
+  \includegraphics<4>[width=\textwidth]{images/sb2-2}
+  \includegraphics<5>[width=\textwidth]{images/sb2-3}
   \end{center}
 #+END_LaTeX
 
-** scratchbox 2 + sbs (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/sb2-0}
-  \end{center}
-#+END_LaTeX
-
-** scratchbox 2 + sbs (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/sb2-1}
-  \end{center}
-#+END_LaTeX
-
-** scratchbox 2 + sbs (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/sb2-2}
-  \end{center}
-#+END_LaTeX
-
-** scratchbox 2 + sbs (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/sb2-3}
-  \end{center}
-#+END_LaTeX
-
-*** notes 							   :B_noteNH:
-   :PROPERTIES:
-   :BEAMER_env: noteNH
-   :END:
-
-   Prawdopodobnie ciągle najlepsze rozwiązanie dla programistów na
-   systemach nie Debianowych. Na Debianie jest multiarch.
 
 ** System budowania dziś
 
@@ -609,72 +574,21 @@ bliska.
 
 #+BEGIN_LaTeX
   \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-0}
+  \includegraphics<1>[width=\textwidth]{images/auditd-0}
+  \includegraphics<2>[width=\textwidth]{images/auditd-1}
+  \includegraphics<3>[width=\textwidth]{images/auditd-2}
+  \includegraphics<4>[width=\textwidth]{images/auditd-3}
+  \includegraphics<5>[width=\textwidth]{images/auditd-4}
+  \includegraphics<6>[width=\textwidth]{images/auditd-5}
+  \includegraphics<7>[width=\textwidth]{images/auditd-6}
+  \includegraphics<8>[width=\textwidth]{images/auditd-7}
+  \includegraphics<9>[width=\textwidth]{images/auditd-8}
   \end{center}
 #+END_LaTeX
 
-** auditd + dot (przykład)
+** auditd - uniwersalne narzędzie
 
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-1}
-  \end{center}
-#+END_LaTeX
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-2}
-  \end{center}
-#+END_LaTeX
-
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-3}
-  \end{center}
-#+END_LaTeX
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-4}
-  \end{center}
-#+END_LaTeX
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-5}
-  \end{center}
-#+END_LaTeX
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-6}
-  \end{center}
-#+END_LaTeX
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-7}
-  \end{center}
-#+END_LaTeX
-
-** auditd + dot (przykład)
-
-#+BEGIN_LaTeX
-  \begin{center}
-  \includegraphics[width=\textwidth]{images/auditd-8}
-  \end{center}
-#+END_LaTeX
-
-** auditd
-
-    + Dodatkowo śledzenie:
+    Możliwe śledzenie wywołań systemowych:
       + sync(2), f*sync(2)
       + execve(3)
       + ...
