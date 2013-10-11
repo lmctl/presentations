@@ -1,4 +1,4 @@
-% Created 2013-10-10 Thu 21:55
+% Created 2013-10-11 Fri 14:25
 \documentclass[presentation,aspectratio=43,12pt]{beamer}
 \usepackage{fontspec}
 \usepackage{fixltx2e}
@@ -42,7 +42,7 @@
 \label{sec-1}
 
 \begin{frame}[label=sec-1-1]{Wprowadzenie}
-Cel prezentacji - przybliżenie procesu, problemów i~ich
+Celem prezentacji jest przybliżenie procesów, problemów i~ich
 rozwiązań związanych z budową solidnej bazy systemu operacyjnego,
 czyli dystrybucji GNU/Linuksa.
 
@@ -173,18 +173,15 @@ Reżim czasowy - quick fix and dirty hack}
 
 \begin{frame}[label=sec-2-5]{System wbudowany (konsekwencje)}
 \begin{itemize}
-\item "Optymalizowany" pod konkretny sprzęt (sleep~42)
+\item "Optymalizowany" pod konkretny sprzęt
 
-\item <2-> Kontrola dostępu nie zawsze traktowana z~należytą uwagą
-(/dev/exynos-mem)
+\item <2-> Kontrola dostępu nie zawsze traktowana z~należytą
+uwagą (/dev/exynos-mem)
 
-\item <3-> System bardzo okrojony (braki narzędzi lub dostępne ich
-zubożone wersje)
+\item <3-> System bardzo okrojony
 
-\item <4-> Mnogość rozwiązań tymczasowych (pliki binarne w
-repozytorium)
+\item <4-> Mnogość rozwiązań tymczasowych
 \end{itemize}
-
 
 \note{\begin{itemize}
 \item Pliki binarne w repo - nie działa w przypadku wprowadzenia nowego
@@ -209,14 +206,10 @@ wymagane funkcjonalności zamiast tylko być)
 \begin{frame}[label=sec-2-6]{SLP(2) circa 2010}
 \begin{itemize}
 \item scratchbox(1) do kompilacji skrośnej
-\item init(8) z busyboksa
-\item Większość procesów działa z uprawnieniami roota
-\item Pakiety .deb do dystrybucji oprogramowania
-\end{itemize}
-
-
-\begin{itemize}
-\item W oryginalnym zamyśle "projektowany" na urządzenia smartphone
+\item <2-> init(8) z busyboksa
+\item <3-> Procesy działają z uprawnieniami roota
+\item <4-> Pakiety .deb do dystrybucji oprogramowania
+\item <5-> Oryginalnie "projektowany" typu smartphone
 \end{itemize}
 
 \note{Wszystko z powyższego zmieniło się z czasem, bo zmieniły się aspiracje.}
@@ -249,49 +242,29 @@ problem po problemie.}
 \section{Problem 1: Budowa oprogramowania}
 \label{sec-3}
 
-\begin{frame}[label=sec-3-1]{Cechy pożądanego środowiska budowania:}
-\begin{itemize}
-\item Wygodna kompilacja skrośna istniejących projektów GNU/Linux (x86
--> ARM, amd64 -> x86)
-
-\item Środowisko przeźroczyste dla programistów i~wygodne w utrzymaniu
-
-\item Powtarzalne wyniki budowania (niezależne od środowiska
-programisty)
-\end{itemize}
-
+\begin{frame}[label=sec-3-1]{Wykorzystywane: scratchbox(1)}
+scratchbox - niejawna kompilacja skrośna przez połączenie dwóch systemów:
 
 \begin{itemize}
-\item <2-> Niezależne środowiska dla różnych projektów, architektur sprzętowych, \ldots{}
-
-\item <2-> W pełni funcjonalny system nie wymagający praw administratora
-\end{itemize}
-
-\note{\begin{itemize}
-\item Budujemy dystrybucję GNU/Linuksa - potrzebujemy systemu do
-budowania pakietów FLOSS.
-
-\item Powtarzalne wyniki - tak jak pbuilder w debianie.
-
-\item Wygodne - przeźroczyste.
-\end{itemize}}
-\end{frame}
-
-\begin{frame}[label=sec-3-2]{Wykorzystywane: scratchbox(1)}
-\begin{itemize}
-\item Bazuje na zmodyfikowanym środowisku, by stworzyć iluzję systemu
-docelowego:
-
-\begin{itemize}
-\item System docelowy (target) dostarcza biblioteki
-\item Narzędzia (tools) dostarczają kompilator, linker, itp.
+\item System docelowy dostarcza bibliotek
+\item Narzędzia dostarczają kompilator, linker
 \item chroot(8) + bind mounty + symlinki + (magia) = "spójny system"
-\end{itemize}
 \end{itemize}
 
 \pause
-
+Wady:
 \begin{itemize}
+\item Bardzo czasochłonny w utrzymaniu
+
+\item Instalacja globalna /scratchbox
+
+\item Środowisko programisty inne niż budowania
+
+\item 1 użytkownik = 1 środowisko budowania
+\end{itemize}
+
+
+\note{\begin{itemize}
 \item Narzędzia nie są w pełni funkcjonalnym systemem - trudna
 aktualizacja
 
@@ -303,13 +276,50 @@ aktualizacja
 \end{itemize}
 
 
-\note{\begin{itemize}
+
+
+\begin{itemize}
 \item Iluzja - tzw. niejawna cross-kompilacja
 
 \item System co najwyżej dostateczny. Nieoptymalny.
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-3-3]{Alternatywy:}
+\begin{frame}[label=sec-3-2]{Pożądane cechy środowiska budowania}
+\begin{itemize}
+\item Kompilacja skrośna istniejących projektów~GNU
+
+\item Środowisko przeźroczyste dla programistów
+
+\item Powtarzalne wyniki budowania
+
+\item <2-> 1 użytkownik = n projektów = n środowisk
+
+\item <2-> Środowisko nie wymagające praw administratora
+\end{itemize}
+
+\note{\begin{itemize}
+\item Budujemy dystrybucję GNU/Linuksa - potrzebujemy systemu do
+budowania pakietów FLOSS.
+
+\item Powtarzalne wyniki - tak jak pbuilder w debianie.
+
+\item Wygodne - przeźroczyste.
+
+\item Wygodna kompilacja skrośna istniejących projektów GNU/Linux (x86
+-> ARM, amd64 -> x86)
+
+\item Środowisko przeźroczyste dla programistów i~wygodne w utrzymaniu
+
+\item Powtarzalne wyniki budowania (niezależne od środowiska
+programisty)
+
+\item <2-> Niezależne środowiska dla różnych projektów, architektur sprzętowych, \ldots{}
+
+\item <2-> W pełni funcjonalny system nie wymagający praw administratora
+\end{itemize}}
+\end{frame}
+
+\begin{frame}[label=sec-3-3]{Alternatywy}
 \begin{itemize}
 \item Natywna kompilacja
 
@@ -317,7 +327,7 @@ aktualizacja
 
 \item Debian/Ubuntu - multiarch
 
-\item Maemo/MeeGo - scratchbox2
+\item Maemo/MeeGo - scratchbox 2
 \end{itemize}
 
 \note{\begin{itemize}
@@ -336,64 +346,36 @@ NIEOPISANE: - emulacja wszysktkiego za pomocą qemu - niemożliwe z
 przyczyn technicznych (kompilacja webkitta)}
 \end{frame}
 
-
-\begin{frame}[label=sec-3-4]{scratchbox 2}
+\begin{frame}[label=sec-3-4]{scratchbox 2 + samsung}
+scratchbox 2:
 \begin{itemize}
-\item Działa na zasadzie dynamicznego odwzorowywania ścieżek przy
-dostępie (access(2), open(2), \ldots{})
-\end{itemize}
-
-
-\begin{itemize}
+\item Biblioteka zmieniająca odwzorowanie ścieżek przy próbie dostępu
+(LD PRELOAD)
 \item Reguły w języku Lua
-\item Bazuje na mechanizmie LD PRELOAD
 \item Nie wymaga praw administratora
+\item Skomplikowana konfiguracja
 \end{itemize}
-\end{frame}
-\begin{frame}[label=sec-3-5]{scratchbox 2 - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/sb2-0}
-\end{center}
-\end{frame}
 
-\begin{frame}[label=sec-3-6]{scratchbox 2 - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/sb2-1}
-\end{center}
-\end{frame}
-\begin{frame}[label=sec-3-7]{scratchbox 2 - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/sb2-2}
-\end{center}
-\end{frame}
+\pause\vskip0.5cm
 
-\begin{frame}[label=sec-3-8]{scratchbox 2 - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/sb2-3}
-\end{center}
-\end{frame}
-\begin{frame}[label=sec-3-9]{scratchbox2 + samsung = sbs}
+sbs - SLP/Samsung Build System
 \begin{itemize}
-\item sbs - SPRC/Samsung Build System
-\begin{itemize}
-\item Skrypt do stworzenia kompletnego środowiska (debootstrap, sb2-init, sb2)
+\item Skrypt do stworzenia kompletnego środowiska (debootstrap + sb2-init + sb2)
 \item Reguły specyficzne dla SLP
-\item Przełączanie pomiędzy środowiskami
-\end{itemize}
-\end{itemize}
-
-\pause
-
-\begin{itemize}
-\item scratchbox2
-\begin{itemize}
-\item Poprawki pozwalające na uruchamianie statycznych programów (qemu-native)
-\end{itemize}
 \end{itemize}
 \end{frame}
-\note{Prawdopodobnie ciągle najlepsze rozwiązanie dla programistów na
-systemach nie Debianowych. Na Debianie jest multiarch.}
-\begin{frame}[label=sec-3-11]{System budowania i zarządanie kodem}
+
+\begin{frame}[label=sec-3-5]{scratchbox 2 + sbs (przykład)}
+\begin{center}
+\includegraphics<1>[width=\textwidth]{images/sb2-m1}
+\includegraphics<2>[width=\textwidth]{images/sb2-0}
+\includegraphics<3>[width=\textwidth]{images/sb2-1}
+\includegraphics<4>[width=\textwidth]{images/sb2-2}
+\includegraphics<5>[width=\textwidth]{images/sb2-3}
+\end{center}
+\end{frame}
+
+\begin{frame}[label=sec-3-6]{System budowania dziś}
 \begin{itemize}
 \item openSUSE build service (OBS) - adresuje problemy, których nie
 rozwiązywał sbs
@@ -421,7 +403,7 @@ Wygodny dla SCMu, dla programistów - średnio.}
 \section{Problem 2: init(8)}
 \label{sec-4}
 
-\begin{frame}[label=sec-4-1]{Stan zastany:}
+\begin{frame}[label=sec-4-1]{Stan zastany}
 \begin{itemize}
 \item init(8) z busyboksa
 \item /etc/rc.d/rc.sysinit
@@ -430,10 +412,7 @@ Wygodny dla SCMu, dla programistów - średnio.}
 \item Synchronizacja uruchamiania usług:
 
 while [ -e /tmp/foo ]; do sleep 1; done \&\& bar \&
-\end{itemize}
 
-
-\begin{itemize}
 \item <2-> System "zoptymalizowany" - czasem działał
 \end{itemize}
 
@@ -507,7 +486,7 @@ Analiza działania systemu za pomocą narzędzi:
 \end{itemize}
 
 \pause
-Sympromy problemów:
+Symptomy problemów:
 \begin{itemize}
 \item Niewykorzystane I/O, CPU
 \item Usługi uruchamiane sekwencyjnie
@@ -545,68 +524,29 @@ perl + graphwiz/dot)
 \item connect(2), bind(2)
 \end{itemize}}
 \end{frame}
-\begin{frame}[label=sec-4-6]{auditd - przykład}
+\begin{frame}[label=sec-4-6]{auditd + dot (przykład)}
 \begin{center}
-\includegraphics[width=\textwidth]{images/auditd-0}
+\includegraphics<1>[width=\textwidth]{images/auditd-0}
+\includegraphics<2>[width=\textwidth]{images/auditd-1}
+\includegraphics<3>[width=\textwidth]{images/auditd-2}
+\includegraphics<4>[width=\textwidth]{images/auditd-3}
+\includegraphics<5>[width=\textwidth]{images/auditd-4}
+\includegraphics<6>[width=\textwidth]{images/auditd-5}
+\includegraphics<7>[width=\textwidth]{images/auditd-6}
+\includegraphics<8>[width=\textwidth]{images/auditd-7}
+\includegraphics<9>[width=\textwidth]{images/auditd-8}
 \end{center}
 \end{frame}
-\begin{frame}[label=sec-4-7]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-1}
-\end{center}
-\end{frame}
-
-\begin{frame}[label=sec-4-8]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-2}
-\end{center}
-\end{frame}
-\begin{frame}[label=sec-4-9]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-3}
-\end{center}
-\end{frame}
-
-\begin{frame}[label=sec-4-10]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-4}
-\end{center}
-\end{frame}
-
-\begin{frame}[label=sec-4-11]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-5}
-\end{center}
-\end{frame}
-
-\begin{frame}[label=sec-4-12]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-6}
-\end{center}
-\end{frame}
-
-\begin{frame}[label=sec-4-13]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-7}
-\end{center}
-\end{frame}
-\begin{frame}[label=sec-4-14]{auditd - przykład}
-\begin{center}
-\includegraphics[width=\textwidth]{images/auditd-8}
-\end{center}
-\end{frame}
-\begin{frame}[label=sec-4-15]{auditd}
-\begin{itemize}
-\item Dodatkowo śledzenie:
+\begin{frame}[label=sec-4-7]{auditd - uniwersalne narzędzie}
+Możliwe śledzenie wywołań systemowych:
 \begin{itemize}
 \item sync(2), f*sync(2)
 \item execve(3)
 \item \ldots{}
 \end{itemize}
-\end{itemize}
 \end{frame}
 
-\begin{frame}[label=sec-4-16]{init(8) dziś i jutro}
+\begin{frame}[label=sec-4-8]{init(8) dziś i jutro}
 \begin{itemize}
 \item systemd v204 + natywna konfiguracja
 
@@ -621,7 +561,7 @@ nie tylko tam.}
 \section{Problem 3: Niezawodność systemu}
 \label{sec-5}
 
-\begin{frame}[label=sec-5-1]{Stan zastany:}
+\begin{frame}[label=sec-5-1]{Stan zastany}
 \begin{itemize}
 \item Większość programów działa z prawami administratora (w tym
 window manager)
@@ -671,17 +611,10 @@ security ponad 40 lat temu - użytkownicy, grupy (tzw. DAC).
 \begin{frame}[label=sec-6-1]{Quo vadis TizenOS?}
 \begin{itemize}
 \item Więcej GNU/Linuksa w Tizenie
-\end{itemize}
-
-\pause
-
-\begin{itemize}
-\item Stworzenie nowej dystrybucji GNU/Linuksa
-\item Naprawienie błędów
-\item ???
-\item PROFIT!!!
+\item <2-> Więcej Tizena w GNU/Linuksie
 \end{itemize}
 \end{frame}
+
 \section{Q\&A}
 \label{sec-7}
 
@@ -701,12 +634,13 @@ wydany wykorzystujący Tizena:
 
 \begin{frame}[label=sec-7-2]{Dziękuję za uwagę}
 Karol Lewandowski <k.lewandowsk@samsung.com>
+
 lmctl @freenode (\#tizen)
 \end{frame}
 
 \begin{frame}[label=sec-7-3]{Linki}
 \begin{itemize}
-\item sbs: \url{https://review.tizen.org/git/?p=tools/sbs.git;a=summary}
+\item sbs (wartość historyczna): \url{https://review.tizen.org/git/?p=tools/sbs.git;a=summary}
 
 \item Gerrit:  \url{http://review.tizen.org/gerrit}
 
