@@ -413,6 +413,15 @@ bliska.
   + Skrypt do stworzenia kompletnego środowiska (debootstrap + sb2-init + sb2)
   + Reguły specyficzne dla SLP
 
+
+** scratchbox 2 + sbs (przykład)
+
+#+BEGIN_LaTeX
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/sb2-m1}
+  \end{center}
+#+END_LaTeX
+
 ** scratchbox 2 + sbs (przykład)
 
 #+BEGIN_LaTeX
@@ -489,7 +498,6 @@ bliska.
     + Synchronizacja uruchamiania usług:
 
       while [ -e /tmp/foo ]; do sleep 1; done && bar &
-
 
     + <2-> System "zoptymalizowany" - czasem działał
 

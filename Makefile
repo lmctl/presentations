@@ -23,6 +23,7 @@ beamer/themes/inner/beamerinnerthemetizen.sty
 jesien2013.pdf: jesien2013.tex jesien2013.toc
 
 jesien2013.tex: images/tizen-history.pdf \
+images/sb2-m1.eps \
 images/sb2-0.eps \
 images/sb2-1.eps \
 images/sb2-2.eps \
