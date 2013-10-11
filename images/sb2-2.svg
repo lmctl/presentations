@@ -14,7 +14,7 @@
    version="1.1"
    id="svg4729"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="sb2-1.svg">
+   sodipodi:docname="sb2-2.svg">
   <metadata
      id="metadata5433">
     <rdf:RDF>
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,7 +51,7 @@
      inkscape:current-layer="svg4729">
     <sodipodi:guide
        orientation="0,1"
-       position="396.82265,282.83757"
+       position="350.06945,273.95059"
        id="guide5706" />
   </sodipodi:namedview>
   <defs
@@ -1995,107 +1995,15 @@
      id="path5399"
      d="m 120.9414,58.625 -10,5 10,5 z"
      style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
-  <g
-     id="g5401"
-     style="fill:#000000;fill-opacity:1"
-     transform="translate(-60.895082,-150.8467)">
-    <use
-       height="249"
-       width="451"
-       id="use5403"
-       y="171.1875"
-       x="225.89844"
-       xlink:href="#glyph0-7" />
-    <use
-       height="249"
-       width="451"
-       id="use5405"
-       y="171.1875"
-       x="233.84766"
-       xlink:href="#glyph0-15" />
-    <use
-       height="249"
-       width="451"
-       id="use5407"
-       y="171.1875"
-       x="242.10938"
-       xlink:href="#glyph0-9" />
-    <use
-       height="249"
-       width="451"
-       id="use5409"
-       y="171.1875"
-       x="250.11719"
-       xlink:href="#glyph0-11" />
-    <use
-       height="249"
-       width="451"
-       id="use5411"
-       y="171.1875"
-       x="258.35938"
-       xlink:href="#glyph0-16" />
-    <use
-       height="249"
-       width="451"
-       id="use5413"
-       y="171.1875"
-       x="263.4375"
-       xlink:href="#glyph0-17" />
-    <use
-       height="249"
-       width="451"
-       id="use5415"
-       y="171.1875"
-       x="267.8125"
-       xlink:href="#glyph0-3" />
-    <use
-       height="249"
-       width="451"
-       id="use5417"
-       y="171.1875"
-       x="276.07422"
-       xlink:href="#glyph0-2" />
-    <use
-       height="249"
-       width="451"
-       id="use5419"
-       y="171.1875"
-       x="279.6875"
-       xlink:href="#glyph0-11" />
-    <use
-       height="249"
-       width="451"
-       id="use5421"
-       y="171.1875"
-       x="287.92969"
-       xlink:href="#glyph0-17" />
-    <use
-       height="249"
-       width="451"
-       id="use5423"
-       y="171.1875"
-       x="292.30469"
-       xlink:href="#glyph0-21" />
-    <use
-       height="249"
-       width="451"
-       id="use5425"
-       y="171.1875"
-       x="300.56641"
-       xlink:href="#glyph0-18" />
-    <use
-       height="249"
-       width="451"
-       id="use5427"
-       y="171.1875"
-       x="307.71484"
-       xlink:href="#glyph0-18" />
-    <use
-       height="249"
-       width="451"
-       id="use5429"
-       y="171.1875"
-       x="314.86328"
-       xlink:href="#glyph0-20" />
-  </g>
+  <text
+     xml:space="preserve"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="164.8743"
+     y="20.388067"
+     id="text3293"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3295"
+       x="164.8743"
+       y="20.388067">execve(/bin/gcc)</tspan></text>
 </svg>
