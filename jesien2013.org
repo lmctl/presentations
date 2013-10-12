@@ -176,15 +176,11 @@ bliska.
     Cechy systemu wbudowanego:
 
     + Realizuje jedną dobrze zdefiniowaną funkcję
-    + (Typowo) Preinstalowany
+    + <2-> (Typowo) Preinstalowany
     + <2-> Bardzo mocno związany z produktem
-    + <2-> Produkt związany z datą wydania
+    + <3-> Produkt związany z datą wydania
 
-    #+BEAMER: \pause\vskip1cm
-
-    (Daty wydania nie zawsze są realne.)
-
-*** notes							   :B_noteNH:
+*** notes 							   :B_noteNH:
     :PROPERTIES:
     :BEAMER_env: noteNH
     :END:
@@ -229,10 +225,10 @@ bliska.
 ** SLP(2) circa 2010
 
    + scratchbox(1) do kompilacji skrośnej
-   + <2-> init(8) z busyboksa
-   + <3-> Procesy działają z uprawnieniami roota
-   + <4-> Pakiety .deb do dystrybucji oprogramowania
-   + <5-> Oryginalnie "projektowany" typu smartphone
+   + init(8) z busyboksa
+   + Procesy działają z uprawnieniami roota
+   + Pakiety .deb do dystrybucji oprogramowania
+   + <2-> Oryginalnie "projektowany" typu smartphone
 
 *** notes 							   :B_noteNH:
     :PROPERTIES:
@@ -691,7 +687,10 @@ bliska.
 
    + Gerrit:  \url{http://review.tizen.org/gerrit}
 
+   + Lista tizen-dev: \url{https://lists.tizen.org/pipermail/dev/}
+
    + Grafy auditd: \url{https://wiki.tizen.org/wiki/System/Dependency_graphs}
 
-   + Lista dyskuksyjna: \url{https://lists.tizen.org/pipermail/dev/}
+   + xorg-launch-helper: \url{https://github.com/sofar/xorg-launch-helper}
 
+   + systemd --user units: \url{https://github.com/sofar/user-session-units}
