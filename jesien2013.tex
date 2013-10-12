@@ -1,4 +1,4 @@
-% Created 2013-10-11 Fri 14:25
+% Created 2013-10-12 sob 10:39
 \documentclass[presentation,aspectratio=43,12pt]{beamer}
 \usepackage{fontspec}
 \usepackage{fixltx2e}
@@ -28,7 +28,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 23.4.1 (Org mode 8.0.7)}}
+  pdfcreator={Emacs 23.3.1 (Org mode 8.0.7)}}
 \begin{document}
 
 \maketitle
@@ -157,14 +157,10 @@ Cechy systemu wbudowanego:
 
 \begin{itemize}
 \item Realizuje jedną dobrze zdefiniowaną funkcję
-\item (Typowo) Preinstalowany
+\item <2-> (Typowo) Preinstalowany
 \item <2-> Bardzo mocno związany z produktem
-\item <2-> Produkt związany z datą wydania
+\item <3-> Produkt związany z datą wydania
 \end{itemize}
-
-\pause\vskip1cm
-
-(Daty wydania nie zawsze są realne.)
 
 \note{Oprogramowanie integralną częścią produktu.
 
@@ -206,10 +202,10 @@ wymagane funkcjonalności zamiast tylko być)
 \begin{frame}[label=sec-2-6]{SLP(2) circa 2010}
 \begin{itemize}
 \item scratchbox(1) do kompilacji skrośnej
-\item <2-> init(8) z busyboksa
-\item <3-> Procesy działają z uprawnieniami roota
-\item <4-> Pakiety .deb do dystrybucji oprogramowania
-\item <5-> Oryginalnie "projektowany" typu smartphone
+\item init(8) z busyboksa
+\item Procesy działają z uprawnieniami roota
+\item Pakiety .deb do dystrybucji oprogramowania
+\item <2-> Oryginalnie "projektowany" typu smartphone
 \end{itemize}
 
 \note{Wszystko z powyższego zmieniło się z czasem, bo zmieniły się aspiracje.}
@@ -644,10 +640,14 @@ lmctl @freenode (\#tizen)
 
 \item Gerrit:  \url{http://review.tizen.org/gerrit}
 
+\item Lista tizen-dev: \url{https://lists.tizen.org/pipermail/dev/}
+
 \item Grafy auditd: \url{https://wiki.tizen.org/wiki/System/Dependency_graphs}
 
-\item Lista dyskuksyjna: \url{https://lists.tizen.org/pipermail/dev/}
+\item xorg-launch-helper: \url{https://github.com/sofar/xorg-launch-helper}
+
+\item systemd --user units: \url{https://github.com/sofar/user-session-units}
 \end{itemize}
 \end{frame}
-% Emacs 23.4.1 (Org mode 8.0.7)
+% Emacs 23.3.1 (Org mode 8.0.7)
 \end{document}
