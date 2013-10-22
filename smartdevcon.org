@@ -3,6 +3,8 @@
 #+AUTHOR: Łukasz Stelmach
 #+DATE: 12–14 September, 2013
 
+#+COMMENT: (w=1440; h=$(($((3 * $w)) / 4)); g=${w}x${h};display -crop ${g}+0+0 -resize 1024x768 -window root   /run/media/steelman/SDHC16GB/cut_out_black.jpg )
+#+COMMENT: mupdf -r 204 smartdevcon.pdf
 #+TOC: [pausesections]
 #+STARTUP: beamer
 #+OPTIONS: H:2 texht:t
@@ -545,3 +547,19 @@
        Jarosław Staniek (T1)
      + 11:15 — Solution for Tizen/, Michał Knapiński
        and Michal Pawluk (T2)
+** COMMENT xrandr full-screen for awesome
+#+BEGIN_SRC lua
+  function (c)
+    local geometry = {}
+    awful.client.floating.set(c, true)
+    c.border_width = 0
+    c.screen = 1
+    c.fullscreen = false
+    geometry = c:geometry()
+    geometry['width'] = screen[c.screen].geometry.width
+    geometry['height'] = 768*2+11
+    geometry['y'] = 0
+    geometry['x'] = 0
+    c:geometry(geometry) -- {x=0, y=947, width = 680, height= 103})
+  end
+#+END_SRC
